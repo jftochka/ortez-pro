@@ -13,54 +13,33 @@
             <h2>Послуги</h2>
             <p>Професійне виготовлення ортопедичних виробів найвищої якості</p>
         </div>
-        <div class="carousel-wrapper">
-            <div class="carousel-item">
-                <a href="{{ "/ortezy/systemy-orteziv-na-verhni-kinczivky/" | relURL }}">
-                    <img src="{{ "/images/ortez_verhnij_bezsharnirnyj-1024x706.png" | relURL }}" alt="Ортез">
-                </a>
-            </div>
-            <div class="carousel-item">
-                <a href="{{ "/ortezy/systemy-orteziv-na-verhni-kinczivky/" | relURL }}">
-                    <img src="{{ "/images/ortez_verhni_sharnirnyj-1024x706.png" | relURL }}" alt="Ортез">
-                </a>
-            </div>
-            <div class="carousel-item">
-                <a href="{{ "/protezy/systemy-proteziv-na-nyzhni-kinczivky/" | relURL }}">
-                    <img src="{{ "/images/protez_nyzhni-1024x706.png" | relURL }}" alt="Протез">
-                </a>
-            </div>
-            <div class="carousel-item">
-                <a href="{{ "/ortezy/systemy-orteziv-na-nyzhni-kinczivky/" | relURL }}">
-                    <img src="{{ "/images/ortez_nyzhni_bezsharnirnyj-1024x706.png" | relURL }}" alt="Ортез">
-                </a>
-            </div>
-        </div>
-        <div style="text-align: center; margin-top: 30px;">
-            <a href="tel:{{ .Site.Params.phone | replaceRE " " "" }}" class="btn btn-primary">Замовити</a>
+        <div class="carousel-wrapper services-carousel">
+            <div class="carousel-item"><a href="{{ "/ortezy/systemy-orteziv-na-verhni-kinczivky/" | relURL }}"><img src="{{ "/images/ortez_verhnij_bezsharnirnyj-1024x706.png" | relURL }}" alt="Ортез"></a></div>
+            <div class="carousel-item"><a href="{{ "/ortezy/systemy-orteziv-na-verhni-kinczivky/" | relURL }}"><img src="{{ "/images/ortez_verhni_sharnirnyj-1024x706.png" | relURL }}" alt="Ортез"></a></div>
+            <div class="carousel-item"><a href="{{ "/protezy/systemy-proteziv-na-nyzhni-kinczivky/" | relURL }}"><img src="{{ "/images/protez_nyzhni-1024x706.png" | relURL }}" alt="Протез"></a></div>
+            <div class="carousel-item"><a href="{{ "/ortezy/systemy-orteziv-na-nyzhni-kinczivky/" | relURL }}"><img src="{{ "/images/ortez_nyzhni_bezsharnirnyj-1024x706.png" | relURL }}" alt="Ортез"></a></div>
         </div>
     </div>
 </section>
 
-<section class="partners-section">
+<section class="partners-section section" style="background: var(--bg-light);">
     <div class="container">
         <div class="section-title text-center">
             <h2>Наші партнери та співпраця</h2>
-            <p>Працюємо з провідними світовими виробниками та державними інституціями</p>
         </div>
-        <div class="partners-grid">
-            <div class="partner-item"><img src="{{ "/images/1280px-Otto_Bock_logo.svg.png" | relURL }}" alt="Otto Bock"></div>
-            <div class="partner-item"><img src="{{ "/images/minsocpol-300x300.png" | relURL }}" alt="Мінсоцполітики"></div>
-            <div class="partner-item"><img src="{{ "/images/ntdmq_bmeia1345435-300x252.png" | relURL }}" alt="BMEIA"></div>
-            <div class="partner-item"><img src="{{ "/images/okm5345345-300x300.png" | relURL }}" alt="Partner"></div>
-            <div class="partner-item"><img src="{{ "/images/logo34534-300x300.png" | relURL }}" alt="Partner"></div>
+        <div class="partners-carousel">
+            <div class="partner-slide"><img src="{{ "/images/1280px-Otto_Bock_logo.svg.png" | relURL }}" alt="Otto Bock"></div>
+            <div class="partner-slide"><img src="{{ "/images/minsocpol-300x300.png" | relURL }}" alt="Мінсоцполітики"></div>
+            <div class="partner-slide"><img src="{{ "/images/ntdmq_bmeia1345435-300x252.png" | relURL }}" alt="BMEIA"></div>
+            <div class="partner-slide"><img src="{{ "/images/okm5345345-300x300.png" | relURL }}" alt="Partner"></div>
+            <div class="partner-slide"><img src="{{ "/images/logo34534-300x300.png" | relURL }}" alt="Partner"></div>
         </div>
     </div>
 </section>
 
 <section class="cta-section">
-    <div class="container">
+    <div class="container text-center">
         <h2>Потрібна консультація?</h2>
-        <p>Зателефонуйте нам або залиште заявку</p>
         <a href="tel:{{ .Site.Params.phone | replaceRE " " "" }}" class="btn btn-primary">{{ .Site.Params.phone }}</a>
     </div>
 </section>
