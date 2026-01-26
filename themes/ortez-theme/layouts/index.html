@@ -2,72 +2,33 @@
 <section class="hero-full">
     <div class="container">
         <h1>{{ .Site.Title }}</h1>
-        <p class="subtitle">Спеціалізоване підприємство з виготовлення протезно-ортопедичної продукції за індивідуальним замовленням</p>
+        <p class="subtitle">Виготовлення протезно-ортопедичної продукції за індивідуальним замовленням</p>
         <a href="tel:{{ .Site.Params.phone | replaceRE " " "" }}" class="btn btn-primary">Запис на консультацію</a>
     </div>
 </section>
 
 <section class="section">
     <div class="container">
-        <div class="section-title text-center">
-            <h2>Послуги</h2>
-            <p>Професійне виготовлення ортопедичних виробів найвищої якості</p>
-        </div>
+        <h2 class="text-center mb-5">Послуги</h2>
         <div class="services-carousel">
-            <div class="carousel-item p-3">
-                <a href="{{ "/ortezy/systemy-orteziv-na-verhni-kinczivky/" | relURL }}">
-                    <img src="{{ "/images/ortez_verhnij_bezsharnirnyj-1024x706.png" | relURL }}" alt="Ортез" class="img-fluid rounded">
-                    <h4 class="text-center mt-2">Ортези верхні</h4>
-                </a>
-            </div>
-            <div class="carousel-item p-3">
-                <a href="{{ "/ortezy/systemy-orteziv-na-verhni-kinczivky/" | relURL }}">
-                    <img src="{{ "/images/ortez_verhni_sharnirnyj-1024x706.png" | relURL }}" alt="Ортез" class="img-fluid rounded">
-                    <h4 class="text-center mt-2">Ортези шарнірні</h4>
-                </a>
-            </div>
-            <div class="carousel-item p-3">
-                <a href="{{ "/protezy/systemy-proteziv-na-nyzhni-kinczivky/" | relURL }}">
-                    <img src="{{ "/images/protez_nyzhni-1024x706.png" | relURL }}" alt="Протез" class="img-fluid rounded">
-                    <h4 class="text-center mt-2">Протези нижні</h4>
-                </a>
-            </div>
-            <div class="carousel-item p-3">
-                <a href="{{ "/ortezy/systemy-orteziv-na-nyzhni-kinczivky/" | relURL }}">
-                    <img src="{{ "/images/ortez_nyzhni_bezsharnirnyj-1024x706.png" | relURL }}" alt="Ортез" class="img-fluid rounded">
-                    <h4 class="text-center mt-2">Ортези нижні</h4>
-                </a>
-            </div>
-             <div class="carousel-item p-3">
-                <a href="{{ "/ortopedychni-ustilky/" | relURL }}">
-                    <img src="{{ "/images/ortopedychni-ustilky-1024x706.png" | relURL }}" alt="Устілки" class="img-fluid rounded">
-                    <h4 class="text-center mt-2">Устілки</h4>
-                </a>
-            </div>
+            <div class="carousel-item"><a href="{{ "/ortezy/systemy-orteziv-na-verhni-kinczivky/" | relURL }}"><img src="{{ "/images/ortez_verhnij_bezsharnirnyj-1024x706.png" | relURL }}"><h4 class="mt-2">Ортези верхні</h4></a></div>
+            <div class="carousel-item"><a href="{{ "/ortezy/systemy-orteziv-na-verhni-kinczivky/" | relURL }}"><img src="{{ "/images/ortez_verhni_sharnirnyj-1024x706.png" | relURL }}"><h4 class="mt-2">Ортези шарнірні</h4></a></div>
+            <div class="carousel-item"><a href="{{ "/protezy/systemy-proteziv-na-nyzhni-kinczivky/" | relURL }}"><img src="{{ "/images/protez_nyzhni-1024x706.png" | relURL }}"><h4 class="mt-2">Протези нижні</h4></a></div>
+            <div class="carousel-item"><a href="{{ "/ortezy/systemy-orteziv-na-nyzhni-kinczivky/" | relURL }}"><img src="{{ "/images/ortez_nyzhni_bezsharnirnyj-1024x706.png" | relURL }}"><h4 class="mt-2">Ортези нижні</h4></a></div>
         </div>
     </div>
 </section>
 
-<section class="partners-section section" style="background: var(--bg-light);">
+<section class="section" style="background:#f8f9fa;">
     <div class="container">
-        <div class="section-title text-center">
-            <h2>Наші партнери</h2>
-            <p>Працюємо з провідними світовими виробниками та державними інституціями</p>
-        </div>
+        <h2 class="text-center mb-5">Наші партнери</h2>
         <div class="partners-carousel">
-            <div class="partner-slide"><img src="{{ "/images/1280px-Otto_Bock_logo.svg.png" | relURL }}" alt="Otto Bock"></div>
-            <div class="partner-slide"><img src="{{ "/images/minsocpol-300x300.png" | relURL }}" alt="Мінсоцполітики"></div>
-            <div class="partner-slide"><img src="{{ "/images/ntdmq_bmeia1345435-300x252.png" | relURL }}" alt="BMEIA"></div>
-            <div class="partner-slide"><img src="{{ "/images/okm5345345-300x300.png" | relURL }}" alt="Partner"></div>
-            <div class="partner-slide"><img src="{{ "/images/logo34534-300x300.png" | relURL }}" alt="Partner"></div>
+            <div class="partner-slide"><img src="{{ "/images/1280px-Otto_Bock_logo.svg.png" | relURL }}"></div>
+            <div class="partner-slide"><img src="{{ "/images/minsocpol-300x300.png" | relURL }}"></div>
+            <div class="partner-slide"><img src="{{ "/images/ntdmq_bmeia1345435-300x252.png" | relURL }}"></div>
+            <div class="partner-slide"><img src="{{ "/images/okm5345345-300x300.png" | relURL }}"></div>
+            <div class="partner-slide"><img src="{{ "/images/logo34534-300x300.png" | relURL }}"></div>
         </div>
-    </div>
-</section>
-
-<section class="cta-section">
-    <div class="container text-center">
-        <h2>Потрібна консультація?</h2>
-        <a href="tel:{{ .Site.Params.phone | replaceRE " " "" }}" class="btn btn-primary">{{ .Site.Params.phone }}</a>
     </div>
 </section>
 {{ end }}

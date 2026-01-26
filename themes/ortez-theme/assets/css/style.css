@@ -993,3 +993,34 @@ main {
     color: var(--primary) !important;
     font-size: 24px;
 }
+
+/* --- FORCED CAROUSEL STYLES --- */
+.slick-slide { margin: 0 15px; }
+.slick-list { margin: 0 -15px; }
+.partner-slide {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    outline: none;
+}
+.partner-slide img {
+    max-height: 80px;
+    max-width: 100%;
+    filter: grayscale(100%);
+    opacity: 0.6;
+    transition: 0.3s;
+}
+.partner-slide img:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+/* Services Carousel Fixes */
+.services-carousel .carousel-item {
+    text-align: center;
+    outline: none;
+}
+.services-carousel img {
+    border-radius: 8px;
+    margin: 0 auto;
+}
