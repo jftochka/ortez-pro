@@ -1,3 +1,4 @@
+canonifyURLs = true
 baseURL = 'https://jftochka.github.io/ortez-pro/'
 languageCode = 'uk-UA'
 title = 'Ортез-Про'
@@ -76,4 +77,3 @@ enableRobotsTXT = true
   home = ["HTML", "RSS"]
   section = ["HTML", "RSS"]
   page = ["HTML"]
-canonifyURLs = true
