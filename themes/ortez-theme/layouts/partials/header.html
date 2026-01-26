@@ -14,7 +14,7 @@
         <div class="container">
             <div class="header-content">
                 <a href="/" class="logo">
-                    <img src="/images/logo.png" alt="{{ .Site.Title }}">
+			<img src="{{ "/images/logo.png" | relURL }}" alt="{{ .Site.Title }}">
                 </a>
                 
                 <button class="mobile-menu-toggle" aria-label="Menu">
@@ -40,7 +40,7 @@
                     </ul>
                 </nav>
                 
-                <a href="/kontakty/" class="btn btn-primary header-cta">
+                <a href="{{ "/kontakty/" | relURL }}" class="btn btn-primary header-cta">
                     Зв'язатися
                 </a>
             </div>
