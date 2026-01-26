@@ -76,3 +76,4 @@ enableRobotsTXT = true
   home = ["HTML", "RSS"]
   section = ["HTML", "RSS"]
   page = ["HTML"]
+canonifyURLs = true
