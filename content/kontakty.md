@@ -9,7 +9,7 @@ description: "Контактна інформація Ортез-Про"
 Україна
 
 ### Телефон
-+380 (XX) XXX-XX-XX
++380 97 988 98 81
 
 ### Email
 info@ortez.com.ua
