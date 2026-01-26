@@ -1,0 +1,78 @@
+baseURL = 'https://jftochka.github.io/ortez-pro/'
+languageCode = 'uk-UA'
+title = 'Ортез-Про'
+theme = 'ortez-theme'
+
+defaultContentLanguage = 'uk'
+enableRobotsTXT = true
+
+[params]
+  description = "Протезно-Ортопедичне Підприємство"
+  author = "Ортез-Про"
+  phone = "+380 97 988 98 81"
+  email = "info@ortez.com.ua"
+  address = "Україна"
+  primaryColor = "#25b797"
+  secondaryColor = "#0274be"
+
+[menu]
+  [[menu.main]]
+    name = "Головна"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    name = "Про нас"
+    url = "/pro-nas/"
+    weight = 2
+  [[menu.main]]
+    identifier = "ortezy"
+    name = "Ортези"
+    url = "/ortezy/"
+    weight = 3
+  [[menu.main]]
+    parent = "ortezy"
+    name = "Ортези на хребет"
+    url = "/ortezy/systemy-orteziv-na-hrebet/"
+    weight = 1
+  [[menu.main]]
+    parent = "ortezy"
+    name = "Ортези на верхні кінцівки"
+    url = "/ortezy/systemy-orteziv-na-verhni-kinczivky/"
+    weight = 2
+  [[menu.main]]
+    parent = "ortezy"
+    name = "Ортези на нижні кінцівки"
+    url = "/ortezy/systemy-orteziv-na-nyzhni-kinczivky/"
+    weight = 3
+  [[menu.main]]
+    identifier = "protezy"
+    name = "Протези"
+    url = "/protezy/"
+    weight = 4
+  [[menu.main]]
+    parent = "protezy"
+    name = "Протези на нижні кінцівки"
+    url = "/protezy/systemy-proteziv-na-nyzhni-kinczivky/"
+    weight = 1
+  [[menu.main]]
+    name = "Ортопедичні устілки"
+    url = "/ortopedychni-ustilky/"
+    weight = 5
+  [[menu.main]]
+    name = "Як отримати?"
+    url = "/yak-otrymaty/"
+    weight = 6
+  [[menu.main]]
+    name = "Контакти"
+    url = "/kontakty/"
+    weight = 7
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+  page = ["HTML"]

@@ -1,0 +1,49 @@
+<header class="site-header">
+    <div class="header-top">
+        <div class="container">
+            <div class="header-top-content">
+                <div class="contact-info">
+                    <a href="tel:{{ .Site.Params.phone }}">{{ .Site.Params.phone }}</a>
+                    <a href="mailto:{{ .Site.Params.email }}">{{ .Site.Params.email }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="header-main">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <img src="/images/logo.png" alt="{{ .Site.Title }}">
+                </a>
+                
+                <button class="mobile-menu-toggle" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <nav class="main-nav" id="main-nav">
+                    <ul class="nav-menu">
+                        {{ range .Site.Menus.main }}
+                        <li class="nav-item{{ if $.IsMenuCurrent "main" . }} active{{ end }}">
+                            <a href="{{ .URL }}" class="nav-link">{{ .Name }}</a>
+                            {{ if .HasChildren }}
+                            <ul class="sub-menu">
+                                {{ range .Children }}
+                                <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+                                {{ end }}
+                            </ul>
+                            {{ end }}
+                        </li>
+                        {{ end }}
+                    </ul>
+                </nav>
+                
+                <a href="/kontakty/" class="btn btn-primary header-cta">
+                    Зв'язатися
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
