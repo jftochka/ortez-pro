@@ -1,12 +1,28 @@
-{{ define "main" }}
-<!-- Hero Section -->
-<section class="hero-full">
+
+<section class="partners-section">
     <div class="container">
-        <h1>{{ .Site.Title }}</h1>
-        <p class="subtitle">Спеціалізоване підприємство з виготовлення протезно-ортопедичної продукції за індивідуальним замовленням</p>
-        <a href="tel:{{ .Site.Params.phone | replaceRE " " "" }}" class="btn btn-primary">Запис на консультацію</a>
-    </div>
-</section>
+        <div class="section-title">
+            <h2>Наші партнери та співпраця</h2>
+            <p>Працюємо з провідними світовими виробниками та державними інституціями</p>
+        </div>
+        <div class="partners-grid">
+            <div class="partner-item">
+                <img src="{{ "/images/1280px-Otto_Bock_logo.svg.png" | relURL }}" alt="Otto Bock">
+            </div>
+            <div class="partner-item">
+                <img src="{{ "/images/minsocpol-300x300.png" | relURL }}" alt="Міністерство соціальної політики України">
+            </div>
+            <div class="partner-item">
+                <img src="{{ "/images/ntdmq_bmeia1345435-300x252.png" | relURL }}" alt="BMEIA">
+            </div>
+            <div class="partner-item">
+                <img src="{{ "/images/okm5345345-300x300.png" | relURL }}" alt="Partner Logo">
+            </div>
+            <div class="partner-item">
+                <img src="{{ "/images/logo34534-300x300.png" | relURL }}" alt="Partner Logo">
+            </div>
+        </div>
+    </div></section>
 
 <!-- Services Carousel -->
 <section class="section">
