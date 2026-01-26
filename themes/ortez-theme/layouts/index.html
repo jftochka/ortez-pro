@@ -1,3 +1,45 @@
+{{ define "main" }}
+<section class="hero-full">
+    <div class="container">
+        <h1>{{ .Site.Title }}</h1>
+        <p class="subtitle">Спеціалізоване підприємство з виготовлення протезно-ортопедичної продукції за індивідуальним замовленням</p>
+        <a href="tel:{{ .Site.Params.phone | replaceRE " " "" }}" class="btn btn-primary">Запис на консультацію</a>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-title text-center">
+            <h2>Послуги</h2>
+            <p>Професійне виготовлення ортопедичних виробів найвищої якості</p>
+        </div>
+        <div class="carousel-wrapper">
+            <div class="carousel-item">
+                <a href="{{ "/ortezy/systemy-orteziv-na-verhni-kinczivky/" | relURL }}">
+                    <img src="{{ "/images/ortez_verhnij_bezsharnirnyj-1024x706.png" | relURL }}" alt="Ортез">
+                </a>
+            </div>
+            <div class="carousel-item">
+                <a href="{{ "/ortezy/systemy-orteziv-na-verhni-kinczivky/" | relURL }}">
+                    <img src="{{ "/images/ortez_verhni_sharnirnyj-1024x706.png" | relURL }}" alt="Ортез">
+                </a>
+            </div>
+            <div class="carousel-item">
+                <a href="{{ "/protezy/systemy-proteziv-na-nyzhni-kinczivky/" | relURL }}">
+                    <img src="{{ "/images/protez_nyzhni-1024x706.png" | relURL }}" alt="Протез">
+                </a>
+            </div>
+            <div class="carousel-item">
+                <a href="{{ "/ortezy/systemy-orteziv-na-nyzhni-kinczivky/" | relURL }}">
+                    <img src="{{ "/images/ortez_nyzhni_bezsharnirnyj-1024x706.png" | relURL }}" alt="Ортез">
+                </a>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="tel:{{ .Site.Params.phone | replaceRE " " "" }}" class="btn btn-primary">Замовити</a>
+        </div>
+    </div>
+</section>
 
 <section class="partners-section">
     <div class="container">
@@ -7,7 +49,7 @@
         </div>
         <div class="partners-grid">
             <div class="partner-item"><img src="{{ "/images/1280px-Otto_Bock_logo.svg.png" | relURL }}" alt="Otto Bock"></div>
-            <div class="partner-item"><img src="{{ "/images/minsocpol-300x300.png" | relURL }}" alt="Міністерство соціальної політики України"></div>
+            <div class="partner-item"><img src="{{ "/images/minsocpol-300x300.png" | relURL }}" alt="Мінсоцполітики"></div>
             <div class="partner-item"><img src="{{ "/images/ntdmq_bmeia1345435-300x252.png" | relURL }}" alt="BMEIA"></div>
             <div class="partner-item"><img src="{{ "/images/okm5345345-300x300.png" | relURL }}" alt="Partner"></div>
             <div class="partner-item"><img src="{{ "/images/logo34534-300x300.png" | relURL }}" alt="Partner"></div>
@@ -15,209 +57,10 @@
     </div>
 </section>
 
-<!-- Services Carousel -->
-<section class="section">
-    <div class="container">
-        <div class="section-title">
-            <h2>Послуги</h2>
-            <p>Професійне виготовлення ортопедичних виробів найвищої якості</p>
-        </div>
-
-        <div class="carousel-wrapper">
-            <div class="carousel-item">
-                <a href="{{ "/ortezy/systemy-orteziv-na-verhni-kinczivky/" | relURL }}">
-                    <img src="{{ "/images/ortez_verhnij_bezsharnirnyj-1024x706.png" | relURL }}" alt="Ортез верхній безшарнірний">
-                </a>
-            </div>
-            <div class="carousel-item">
-                <a href="{{ "/ortezy/systemy-orteziv-na-verhni-kinczivky/" | relURL }}">
-                    <img src="{{ "/images/ortez_verhni_sharnirnyj-1024x706.png" | relURL }}" alt="Ортез верхній шарнірний">
-                </a>
-            </div>
-            <div class="carousel-item">
-                <a href="{{ "/protezy/systemy-proteziv-na-nyzhni-kinczivky/" | relURL }}">
-                    <img src="{{ "/images/protez_nyzhni-1024x706.png" | relURL }}" alt="Протез нижній">
-                </a>
-            </div>
-            <div class="carousel-item">
-                <a href="{{ "/ortezy/systemy-orteziv-na-nyzhni-kinczivky/" | relURL }}">
-                    <img src="{{ "/images/ortez_nyzhni_bezsharnirnyj-1024x706.png" | relURL }}" alt="Ортез нижній безшарнірний">
-                </a>
-            </div>
-            <div class="carousel-item">
-                <a href="{{ "/ortopedychni-ustilky/" | relURL }}">
-                    <img src="{{ "/images/ortopedychni-ustilky-1024x706.png" | relURL }}" alt="Ортопедичні устілки">
-                </a>
-            </div>
-            <div class="carousel-item">
-                <a href="{{ "/ortezy/systemy-orteziv-na-nyzhni-kinczivky/" | relURL }}">
-                    <img src="{{ "/images/ortez_nyzhnij_sharnirnyj-1024x706.png" | relURL }}" alt="Ортез нижній шарнірний">
-                </a>
-            </div>
-            <div class="carousel-item">
-                <a href="{{ "/ortezy/systemy-orteziv-na-nyzhni-kinczivky/" | relURL }}">
-                    <img src="{{ "/images/ortez_abdukczijnyj_z-rozpirkoyu-1024x706.png" | relURL }}" alt="Ортез абдукційний з розпіркою">
-                </a>
-            </div>
-            <div class="carousel-item">
-                <a href="{{ "/ortezy/systemy-orteziv-na-hrebet/" | relURL }}">
-                    <img src="{{ "/images/ortez_poperekovyj-1024x706.png" | relURL }}" alt="Ортез поперековий">
-                </a>
-            </div>
-        </div>
-
-        <div style="text-align: center; margin-top: 30px;">
-            <a href="tel:{{ .Site.Params.phone | replaceRE " " "" }}" class="btn btn-primary">Замовити</a>
-        </div>
-    </div>
-</section>
-
-<!-- Why Us Section -->
-<section class="section" style="background: var(--bg-light);">
-    <div class="container">
-        <div class="section-title">
-            <h2>Чому Ортез-Про</h2>
-        </div>
-
-        <div class="features-grid">
-            <div class="feature-box">
-                <div class="feature-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M9 16l2 2 4-4"></path></svg>
-                </div>
-                <h3>Досвід</h3>
-                <p>20 років на ринку виробництва ортезно-протезної продукції. Та тисячі задоволених замовників</p>
-            </div>
-
-            <div class="feature-box">
-                <div class="feature-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
-                </div>
-                <h3>Європейське обладнання</h3>
-                <p>Німецькі та іспанські устаткування й технології, а також українські комплектуючі, що відповідають світовим стандартам якості</p>
-            </div>
-
-            <div class="feature-box">
-                <div class="feature-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
-                </div>
-                <h3>Індивідуальний підхід</h3>
-                <p>Індивідуальне виготовлення типових й атипових зразків будь-якої складності з урахуванням анатомічних особливостей та естетичних смаків</p>
-            </div>
-
-            <div class="feature-box">
-                <div class="feature-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
-                </div>
-                <h3>Сертифіковані спеціалісти</h3>
-                <p>7 техніків-протезистів пройшли навчання на німецькому виробництві "Otto Bock GmbH" та УДНДІ протезування та протезобудування</p>
-            </div>
-
-            <div class="feature-box">
-                <div class="feature-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                </div>
-                <h3>Консультаційний супровід</h3>
-                <p>На кожному з етапів співпраці, замовника консультують техніки, дизайнери та юристи</p>
-            </div>
-
-            <div class="feature-box">
-                <div class="feature-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
-                </div>
-                <h3>Соціальна відповідальність</h3>
-                <p>53% колективу - особи з інвалідністю. А приміщення обладнане безпороговою технологією для безперешкодного доступу</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Services Cards -->
-<section class="section">
-    <div class="container">
-        <div class="section-title">
-            <h2>Наші послуги</h2>
-        </div>
-
-        <div class="cards-grid">
-            <div class="card">
-                <div class="card-image">
-                    <img src="{{ "/images/ortez_verhnij_bezsharnirnyj-1024x706.png" | relURL }}" alt="Ортези">
-                </div>
-                <div class="card-content">
-                    <h3>Ортези</h3>
-                    <p>Системи ортезів на хребет, верхні та нижні кінцівки</p>
-                    <a href="{{ "/ortezy/" | relURL }}" class="btn btn-outline">Детальніше</a>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-image">
-                    <img src="{{ "/images/protez_nyzhni-1024x706.png" | relURL }}" alt="Протези">
-                </div>
-                <div class="card-content">
-                    <h3>Протези</h3>
-                    <p>Індивідуальне виготовлення протезів на нижні кінцівки</p>
-                    <a href="{{ "/protezy/" | relURL }}" class="btn btn-outline">Детальніше</a>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-image">
-                    <img src="{{ "/images/ortopedychni-ustilky-1024x706.png" | relURL }}" alt="Ортопедичні устілки">
-                </div>
-                <div class="card-content">
-                    <h3>Ортопедичні устілки</h3>
-                    <p>Індивідуальні ортопедичні устілки для комфорту</p>
-                    <a href="{{ "/ortopedychni-ustilky/" | relURL }}" class="btn btn-outline">Детальніше</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Important Info Section -->
-<section class="info-section">
-    <div class="container">
-        <h2>Важливо!</h2>
-        <p style="text-align: center; margin-bottom: 30px; font-size: 1.1rem;">Згідно Закону України "Про реабілітацію осіб з інвалідністю в Україні" від 6.10.2005</p>
-        <h3 style="text-align: center; margin-bottom: 40px;">ОСОБИ З ІНВАЛІДНІСТЮ МАЮТЬ ПРАВО НА:</h3>
-
-        <div class="info-grid">
-            <div class="info-card">
-                <h3>Безоплатні послуги</h3>
-                <p>або на пільгових умовах послуги з соціально-побутового і медичного обслуговування, технічні та інші засоби реабілітації</p>
-            </div>
-
-            <div class="info-card">
-                <h3>Грошову компенсацію</h3>
-                <p>вартості технічних та інших засобів реабілітації та послуг, передбачених індивідуальною програмою реабілітації</p>
-            </div>
-
-            <div class="info-card">
-                <h3>Допомогу держави</h3>
-                <p>у створенні умов для безперешкодного доступу до соціальної інфраструктури та транспорту</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Partners Section -->
-<section class="partners-section">
-    <div class="container">
-        <div class="section-title">
-            <h2>Наші партнери</h2>
-        </div>
-        <div class="partners-grid">
-            <img src="{{ "/images/1280px-Otto_Bock_logo.svg.png" | relURL }}" alt="Otto Bock">
-        </div>
-    </div>
-</section>
-
-<!-- CTA Section -->
 <section class="cta-section">
     <div class="container">
         <h2>Потрібна консультація?</h2>
-        <p>Зателефонуйте нам або залиште заявку, і ми зв'яжемося з вами найближчим часом</p>
+        <p>Зателефонуйте нам або залиште заявку</p>
         <a href="tel:{{ .Site.Params.phone | replaceRE " " "" }}" class="btn btn-primary">{{ .Site.Params.phone }}</a>
     </div>
 </section>
