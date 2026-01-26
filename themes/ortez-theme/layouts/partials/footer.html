@@ -54,3 +54,31 @@
         </div>
     </div>
 </footer>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+<script>
+$(document).ready(function(){
+  $('.partners-carousel').slick({
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    arrows: false,
+    dots: false,
+    responsive: [
+      { breakpoint: 768, settings: { slidesToShow: 2 } },
+      { breakpoint: 480, settings: { slidesToShow: 1 } }
+    ]
+  });
+  $('.services-carousel').slick({
+    slidesToShow: 3,
+    autoplay: true,
+    arrows: true,
+    dots: true,
+    responsive: [
+      { breakpoint: 768, settings: { slidesToShow: 1 } }
+    ]
+  });
+});
+</script>
