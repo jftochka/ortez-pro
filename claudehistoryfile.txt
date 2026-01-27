@@ -1,0 +1,6 @@
+2026-01-27 - Commands run by Claude:
+
+1. git ls-files | grep -E "^public/" | head -20 - Check if public folder is tracked in git
+2. hugo --minify - Build Hugo site with production settings
+3. head -20 /Users/bigsur/Desktop/ortez/ortez-pro/public/index.html - Check built HTML file for correct URLs
+4. rm /Users/bigsur/Desktop/ortez/ortez-pro/.github/workflows/hugo.yaml - Delete duplicate workflow file
