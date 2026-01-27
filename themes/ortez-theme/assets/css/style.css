@@ -149,7 +149,7 @@ ul {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
+    gap: 30px;
 }
 
 .logo img {
@@ -165,7 +165,7 @@ ul {
 .nav-menu {
     display: flex;
     justify-content: center;
-    gap: 0;
+    gap: 5px;
 }
 
 .nav-item {
@@ -174,12 +174,10 @@ ul {
 
 .nav-link {
     display: block;
-    padding: 10px 12px;
+    padding: 10px 15px;
     color: var(--text);
     font-weight: 500;
     transition: color var(--transition);
-    white-space: nowrap;
-    font-size: 0.95rem;
 }
 
 .nav-link:hover,

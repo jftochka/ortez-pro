@@ -22,7 +22,7 @@ enableRobotsTXT = true
     url = "/"
     weight = 1
   [[menu.main]]
-    name = "Про нас"
+    name = "Про&nbsp;нас"
     url = "/pro-nas/"
     weight = 2
   [[menu.main]]
@@ -56,11 +56,11 @@ enableRobotsTXT = true
     url = "/protezy/systemy-proteziv-na-nyzhni-kinczivky/"
     weight = 1
   [[menu.main]]
-    name = "Ортопедичні устілки"
+    name = "Ортопедичні&nbsp;устілки"
     url = "/ortopedychni-ustilky/"
     weight = 5
   [[menu.main]]
-    name = "Як отримати?"
+    name = "Як&nbsp;отримати?"
     url = "/yak-otrymaty/"
     weight = 6
   [[menu.main]]
