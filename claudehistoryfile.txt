@@ -6,3 +6,6 @@
 4. rm /Users/bigsur/Desktop/ortez/ortez-pro/.github/workflows/hugo.yaml - Delete duplicate workflow file
 5. curl -s http://localhost:1313/ortez-pro/yak-otrymaty/ - Check page rendering
 6. sed 's/^    //' content/yak-otrymaty.md - Remove 4-space indentation causing code blocks
+7. Updated yak-otrymaty.md to use FAQ accordion dropdown with details/summary elements
+8. Added FAQ accordion CSS styles to style.css
+9. Fixed kontakty.md indentation issue
