@@ -1,14 +1,12 @@
 ---
 title: "Системи ортезів на нижні кінцівки"
 description: "Шарнірні та безшарнірні ортези на ноги"
-image: "/images/ortez-pro-sharnir-leg-noga-766x1024.png"
+image: "/images/ortez_1.png"
 gallery:
-  - "/images/ortez_nyzhni_bezsharnirnyj-1024x706.png"
-  - "/images/ortez_nyzhnij_sharnirnyj-1024x706.png"
-  - "/images/ortez-pro-sharnir-leg-noga-766x1024.png"
-  - "/images/ortez-pro-bezsharnir-nogi1.png"
-  - "/images/ortez-pro-sharnir-nogi2.png"
-  - "/images/ortez_abdukczijnyj_z-rozpirkoyu-1024x706.png"
+  - "/images/ortez_1.png"
+  - "/images/ortez_3.png"
+  - "/images/ortez_2.png"
+  - "/images/ortez_4.png"
 ---
 
 ## Ортези на нижні кінцівки

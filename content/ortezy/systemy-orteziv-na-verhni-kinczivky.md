@@ -1,11 +1,9 @@
 ---
 title: "Системи ортезів на верхні кінцівки"
 description: "Шарнірні та безшарнірні ортези на руки"
-image: "/images/ortez-pro-bezsharnir-ruky-768x512.png"
+image: "/images/ortez_4.png"
 gallery:
-  - "/images/ortez_verhnij_bezsharnirnyj-1024x706.png"
-  - "/images/ortez_verhni_sharnirnyj-1024x706.png"
-  - "/images/ortez-pro-bezsharnir-ruky-768x512.png"
+  - "/images/ortez_4.png"
 ---
 
 ## Ортези на верхні кінцівки

@@ -1,11 +1,9 @@
 ---
 title: "Системи ортезів на хребет"
 description: "Ортез на грудний, поперековий відділи хребта"
-image: "/images/ortez-pro-hrebet-hip-knee-ankle-foot-orthosis3-766x1024.png"
+image: "/images/ortez_2.png"
 gallery:
-  - "/images/ortez-pro-hrebet-hip-knee-ankle-foot-orthosis3-766x1024.png"
-  - "/images/ortez-pro-hrebet-hip-knee-ankle-foot-orthosis-300x300.png"
-  - "/images/ortez_poperekovyj-1024x706.png"
+  - "/images/ortez_2.png"
 ---
 
 ## Ортез на грудний, поперековий відділи хребта, тазостегновий-колінний-гомілковостопний суглоб-стопу
