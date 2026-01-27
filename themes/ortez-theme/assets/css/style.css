@@ -152,9 +152,17 @@ ul {
     gap: 30px;
 }
 
+.logo {
+    flex-shrink: 0;
+}
+
 .logo img {
     height: 50px;
     width: auto;
+}
+
+.header-cta {
+    flex-shrink: 0;
 }
 
 /* Navigation */
@@ -427,16 +435,33 @@ main {
 }
 
 /* Responsive */
+@media (max-width: 1100px) {
+    .nav-link {
+        padding: 10px 10px;
+        font-size: 0.9rem;
+    }
+}
+
 @media (max-width: 992px) {
     h1 { font-size: 2rem; }
     h2 { font-size: 1.75rem; }
-    
+
     .hero {
         padding: 60px 0;
     }
-    
+
     .hero h1 {
         font-size: 2.5rem;
+    }
+
+    .nav-link {
+        padding: 10px 8px;
+        font-size: 0.85rem;
+    }
+
+    .header-cta {
+        padding: 10px 20px;
+        font-size: 0.9rem;
     }
 }
 
