@@ -20,6 +20,11 @@
     padding: 0;
 }
 
+/* Prevent scroll when mobile menu open */
+body.menu-open {
+    overflow: hidden;
+}
+
 html {
     font-size: 16px;
     scroll-behavior: smooth;
@@ -1371,5 +1376,538 @@ main {
 
     .faq-answer {
         padding: 15px;
+    }
+}
+
+/* ========================================
+   ENHANCED MOBILE STYLES
+   ======================================== */
+
+/* Mobile-first improvements */
+@media (max-width: 768px) {
+    /* Base typography for mobile */
+    html {
+        font-size: 15px;
+    }
+
+    body {
+        -webkit-text-size-adjust: 100%;
+    }
+
+    h1 { font-size: 1.75rem; }
+    h2 { font-size: 1.5rem; }
+    h3 { font-size: 1.25rem; }
+
+    .container {
+        padding: 0 15px;
+    }
+
+    /* Mobile Header */
+    .header-top {
+        padding: 6px 0;
+        font-size: 0.8rem;
+    }
+
+    .header-top .container {
+        text-align: center;
+    }
+
+    .header-top a {
+        margin: 0 8px;
+        display: inline-block;
+    }
+
+    .header-main {
+        padding: 10px 0;
+    }
+
+    .logo img {
+        height: 40px;
+    }
+
+    /* Improved hamburger menu */
+    .mobile-menu-toggle {
+        width: 44px;
+        height: 44px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        padding: 10px;
+        border-radius: var(--radius);
+        background: var(--bg-light);
+    }
+
+    .mobile-menu-toggle span {
+        width: 22px;
+        height: 2px;
+        border-radius: 2px;
+    }
+
+    /* Mobile navigation overlay */
+    .main-nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 85%;
+        max-width: 320px;
+        height: 100vh;
+        height: 100dvh;
+        background: white;
+        box-shadow: -5px 0 30px rgba(0,0,0,0.15);
+        transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 70px 0 30px;
+        overflow-y: auto;
+        z-index: 1001;
+    }
+
+    .main-nav.active {
+        right: 0;
+    }
+
+    /* Mobile menu overlay background */
+    .nav-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 1000;
+    }
+
+    .nav-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .nav-menu {
+        padding: 0 20px;
+    }
+
+    .nav-link {
+        padding: 16px 0;
+        font-size: 1.1rem;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .sub-menu {
+        background: var(--bg-light);
+        border-radius: var(--radius);
+        margin: 5px 0 10px;
+        padding: 10px 0;
+    }
+
+    .sub-menu li a {
+        padding: 12px 20px;
+        font-size: 0.95rem;
+        border-bottom: none;
+    }
+
+    /* Hero mobile */
+    .hero-full {
+        min-height: 70vh;
+        min-height: 70dvh;
+        padding: 40px 0;
+        text-align: center;
+    }
+
+    .hero-full h1 {
+        font-size: 2rem !important;
+        line-height: 1.2;
+        margin-bottom: 15px;
+        letter-spacing: 0;
+    }
+
+    .hero-full .subtitle {
+        font-size: 1rem;
+        line-height: 1.5;
+        margin-bottom: 25px;
+        padding: 0 10px;
+    }
+
+    .hero-full .btn {
+        width: 100%;
+        max-width: 280px;
+        padding: 16px 30px;
+        font-size: 1rem;
+    }
+
+    /* Sections mobile */
+    .section {
+        padding: 35px 0;
+    }
+
+    .section h2 {
+        margin-bottom: 25px;
+    }
+
+    /* Touch-friendly buttons */
+    .btn {
+        min-height: 48px;
+        padding: 14px 24px;
+        font-size: 0.95rem;
+    }
+
+    /* Services carousel mobile */
+    .services-carousel {
+        padding: 15px 0;
+        margin: 0 -15px;
+    }
+
+    .carousel-item {
+        flex: 0 0 85%;
+        max-width: 280px;
+    }
+
+    .carousel-item h4 {
+        font-size: 1rem;
+        margin-top: 12px;
+    }
+
+    .slick-slide {
+        margin: 0 8px;
+    }
+
+    .slick-list {
+        margin: 0 -8px;
+        padding: 0 30px !important;
+    }
+
+    .slick-prev, .slick-next {
+        width: 40px;
+        height: 40px;
+    }
+
+    .slick-prev {
+        left: 5px;
+    }
+
+    .slick-next {
+        right: 5px;
+    }
+
+    .slick-dots {
+        bottom: -30px;
+    }
+
+    .slick-dots li button:before {
+        font-size: 10px;
+    }
+
+    /* Partners mobile */
+    .partners-grid {
+        gap: 20px;
+        padding: 20px 0;
+    }
+
+    .partner-item {
+        flex: 0 1 45%;
+    }
+
+    .partner-item img {
+        max-height: 50px;
+    }
+
+    /* Page header mobile */
+    .page-header {
+        padding: 25px 0;
+    }
+
+    .page-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .page-content {
+        padding: 30px 0;
+    }
+
+    /* Contact page mobile */
+    .contact-grid {
+        gap: 25px !important;
+    }
+
+    .contact-info h2 {
+        font-size: 1.4rem;
+    }
+
+    .info-item {
+        margin-bottom: 20px;
+    }
+
+    .info-item h3 {
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+    }
+
+    .social-buttons {
+        margin-top: 25px;
+    }
+
+    .social-buttons .d-flex {
+        flex-direction: column;
+        gap: 10px !important;
+    }
+
+    .social-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 20px;
+        border-radius: var(--radius);
+    }
+
+    .feedback-form-section {
+        padding: 20px !important;
+    }
+
+    .feedback-form-section h3 {
+        font-size: 1.2rem;
+    }
+
+    .feedback-form-section textarea {
+        font-size: 16px !important; /* Prevents zoom on iOS */
+    }
+
+    .map-section {
+        margin-top: 30px !important;
+    }
+
+    .map-responsive {
+        padding-bottom: 70% !important;
+    }
+
+    /* FAQ mobile improvements */
+    .faq-container {
+        gap: 8px;
+    }
+
+    .faq-question {
+        padding: 14px 15px;
+    }
+
+    .faq-step {
+        padding: 3px 8px;
+        font-size: 0.7rem;
+        margin-right: 8px;
+    }
+
+    .faq-actor {
+        font-size: 0.85rem;
+        letter-spacing: 0.5px;
+    }
+
+    .faq-arrow {
+        width: 20px;
+        height: 20px;
+    }
+
+    .faq-answer {
+        padding: 15px;
+        font-size: 0.95rem;
+    }
+
+    /* Order header mobile */
+    .order-header h2 {
+        font-size: 2rem !important;
+    }
+
+    .order-header h3 {
+        font-size: 0.9rem !important;
+        line-height: 1.4;
+    }
+
+    .order-header p {
+        font-size: 1rem !important;
+    }
+
+    /* Actors legend mobile */
+    .actors-legend {
+        flex-direction: column;
+        gap: 15px !important;
+        margin-top: 30px !important;
+    }
+
+    .actor-card {
+        padding: 20px !important;
+        min-width: auto !important;
+    }
+
+    .actor-card h4 {
+        font-size: 1rem;
+    }
+
+    .actor-card p {
+        font-size: 0.9rem;
+        margin-bottom: 0;
+    }
+
+    /* Footer mobile */
+    .footer {
+        padding: 20px 0;
+    }
+
+    .footer p {
+        font-size: 0.85rem;
+    }
+
+    /* Gallery mobile */
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .gallery-item img {
+        height: 120px;
+    }
+
+    /* Rights cards mobile */
+    .rights-grid {
+        gap: 15px;
+    }
+
+    .rights-card {
+        padding: 20px;
+        border-radius: 15px;
+    }
+
+    .rights-card h3 {
+        font-size: 1.3rem;
+    }
+
+    .rights-card p {
+        font-size: 1rem;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 375px) {
+    html {
+        font-size: 14px;
+    }
+
+    .hero-full h1 {
+        font-size: 1.75rem !important;
+    }
+
+    .hero-full .subtitle {
+        font-size: 0.95rem;
+    }
+
+    .faq-step {
+        display: none;
+    }
+
+    .faq-actor {
+        font-size: 0.9rem;
+    }
+
+    .order-header h2 {
+        font-size: 1.75rem !important;
+    }
+
+    .order-header h3 {
+        font-size: 0.85rem !important;
+    }
+}
+
+/* Sticky mobile call button */
+.mobile-call-btn {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .mobile-call-btn {
+        display: flex;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        background: var(--primary);
+        border-radius: 50%;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 20px rgba(37, 183, 151, 0.5);
+        z-index: 999;
+        text-decoration: none;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .mobile-call-btn:hover,
+    .mobile-call-btn:active {
+        transform: scale(1.1);
+        box-shadow: 0 6px 25px rgba(37, 183, 151, 0.6);
+    }
+
+    .mobile-call-btn svg {
+        width: 28px;
+        height: 28px;
+        fill: white;
+    }
+}
+
+/* Improve tap targets */
+@media (max-width: 768px) {
+    a, button {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    .nav-link, .sub-menu li a {
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+    }
+}
+
+/* Safe area for notched phones */
+@supports (padding: max(0px)) {
+    @media (max-width: 768px) {
+        .site-header {
+            padding-top: max(0px, env(safe-area-inset-top));
+        }
+
+        .footer {
+            padding-bottom: max(20px, env(safe-area-inset-bottom));
+        }
+
+        .mobile-call-btn {
+            bottom: max(20px, calc(env(safe-area-inset-bottom) + 10px));
+            right: max(20px, env(safe-area-inset-right));
+        }
+    }
+}
+
+/* Smooth scrolling on touch devices */
+@media (max-width: 768px) {
+    .carousel-wrapper,
+    .services-carousel,
+    .partners-carousel {
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+    }
+}
+
+/* Landscape phone adjustments */
+@media (max-width: 768px) and (orientation: landscape) {
+    .hero-full {
+        min-height: 90vh;
+        min-height: 90dvh;
+    }
+
+    .hero-full h1 {
+        font-size: 1.75rem !important;
+    }
+
+    .hero-full .subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 15px;
     }
 }
