@@ -1854,15 +1854,15 @@ main {
 
 /* Improve tap targets */
 @media (max-width: 768px) {
-    a, button {
-        min-height: 44px;
-        min-width: 44px;
-    }
-
     .nav-link, .sub-menu li a {
         min-height: 48px;
         display: flex;
         align-items: center;
+    }
+
+    .mobile-menu-toggle span {
+        min-height: auto;
+        min-width: auto;
     }
 }
 
