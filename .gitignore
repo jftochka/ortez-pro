@@ -23,6 +23,7 @@ secrets.txt
 
 # Log files
 *.log
+claudehistoryfile.txt
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

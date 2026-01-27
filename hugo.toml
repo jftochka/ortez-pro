@@ -1,5 +1,5 @@
 canonifyURLs = true
-baseURL = 'https://jftochka.github.io/ortez-pro/'
+baseURL = 'https://ortez.com.ua/'
 languageCode = 'uk-UA'
 title = 'Ортез-Про'
 theme = 'ortez-theme'
