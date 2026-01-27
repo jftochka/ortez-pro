@@ -1652,15 +1652,19 @@ main {
     }
 
     .social-buttons .d-flex {
-        flex-direction: column;
-        gap: 10px !important;
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px !important;
     }
 
     .social-btn {
         width: 100%;
+        aspect-ratio: 1;
         justify-content: center;
-        padding: 14px 20px;
+        align-items: center;
+        padding: 15px;
         border-radius: var(--radius);
+        font-size: 0.9rem;
     }
 
     .feedback-form-section {
