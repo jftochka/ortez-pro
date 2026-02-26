@@ -1432,6 +1432,8 @@ main {
         padding: 10px;
         border-radius: var(--radius);
         background: var(--bg-light);
+        position: relative;
+        z-index: 1002;
     }
 
     .mobile-menu-toggle span {
