@@ -1,0 +1,28 @@
+{{ printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+{{- range .Data.Pages -}}
+  {{- if not (or (eq .Section "admin") (.Params.seo).noindex) }}
+  {{- $changefreq := "monthly" -}}
+  {{- $priority := "0.5" -}}
+  {{- if .IsHome -}}
+    {{- $changefreq = "weekly" -}}
+    {{- $priority = "1.0" -}}
+  {{- else if eq .Kind "section" -}}
+    {{- $changefreq = "weekly" -}}
+    {{- $priority = "0.8" -}}
+  {{- else if in (slice "ortezy" "protezy" "ortopedychni-ustilky") .Section -}}
+    {{- $changefreq = "monthly" -}}
+    {{- $priority = "0.7" -}}
+  {{- end }}
+  <url>
+    <loc>{{ .Permalink }}</loc>
+    {{- if not .Lastmod.IsZero }}
+    <lastmod>{{ .Lastmod.Format "2006-01-02T15:04:05-07:00" | safeHTML }}</lastmod>
+    {{- end }}
+    <changefreq>{{ $changefreq }}</changefreq>
+    <priority>{{ $priority }}</priority>
+  </url>
+  {{- end -}}
+{{- end }}
+</urlset>

@@ -7,73 +7,31 @@ theme = 'ortez-theme'
 defaultContentLanguage = 'uk'
 enableRobotsTXT = true
 
-[params]
-  description = "Протезно-Ортопедичне Підприємство"
-  author = "Ортез-Про"
-  phone = "+380 97 988 98 81"
-  email = "info@ortez.com.ua"
-  address = "Україна"
-  primaryColor = "#25b797"
-  secondaryColor = "#0274be"
-
-[menu]
-  [[menu.main]]
-    name = "Головна"
-    url = "/"
-    weight = 1
-  [[menu.main]]
-    name = "Про нас"
-    url = "/pro-nas/"
-    weight = 2
-  [[menu.main]]
-    identifier = "ortezy"
-    name = "Ортези"
-    url = "/ortezy/"
-    weight = 3
-  [[menu.main]]
-    parent = "ortezy"
-    name = "Ортези на хребет"
-    url = "/ortezy/systemy-orteziv-na-hrebet/"
-    weight = 1
-  [[menu.main]]
-    parent = "ortezy"
-    name = "Ортези на верхні кінцівки"
-    url = "/ortezy/systemy-orteziv-na-verhni-kinczivky/"
-    weight = 2
-  [[menu.main]]
-    parent = "ortezy"
-    name = "Ортези на нижні кінцівки"
-    url = "/ortezy/systemy-orteziv-na-nyzhni-kinczivky/"
-    weight = 3
-  [[menu.main]]
-    identifier = "protezy"
-    name = "Протези"
-    url = "/protezy/"
-    weight = 4
-  [[menu.main]]
-    parent = "protezy"
-    name = "Протези на нижні кінцівки"
-    url = "/protezy/systemy-proteziv-na-nyzhni-kinczivky/"
-    weight = 1
-  [[menu.main]]
-    name = "Ортопедичні устілки"
-    url = "/ortopedychni-ustilky/"
-    weight = 5
-  [[menu.main]]
-    name = "Як отримати?"
-    url = "/yak-otrymaty/"
-    weight = 6
-  [[menu.main]]
-    name = "Контакти"
-    url = "/kontakty/"
-    weight = 7
+# Disable empty taxonomy pages so they don't appear in sitemap
+disableKinds = ["taxonomy", "term"]
 
 [markup]
   [markup.goldmark]
     [markup.goldmark.renderer]
+      # Required for raw HTML in content files (pro-nas.md, yak-otrymaty.md).
+      # Mitigated by: GitHub OAuth on CMS, editorial workflow (PR review), Git history.
       unsafe = true
 
 [outputs]
   home = ["HTML", "RSS"]
   section = ["HTML", "RSS"]
   page = ["HTML"]
+
+[sitemap]
+  filename = "sitemap.xml"
+
+# Security: restrict Hugo's OS access
+[security]
+  [security.exec]
+    allow = ['^go$', '^npx$', '^postcss$']
+    osEnv = ['(?i)^(PATH|PATHEXT|APPDATA|TMP|TEMP|TERM|HOME|USERPROFILE)$']
+  [security.funcs]
+    getenv = ['^HUGO_', '^CI$']
+  [security.http]
+    methods = ['(?i)GET|POST']
+    urls = ['.*']

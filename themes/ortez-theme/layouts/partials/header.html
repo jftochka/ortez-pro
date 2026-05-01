@@ -1,38 +1,46 @@
+{{- $site := .Site.Data.site -}}
+{{- $contact := .Site.Data.contact -}}
+{{- $menu := .Site.Data.menu -}}
+{{- $primaryPhone := "" -}}
+{{- range $contact.phones -}}{{- if .primary -}}{{- $primaryPhone = .number -}}{{- end -}}{{- end -}}
+{{- if not $primaryPhone -}}{{- with index $contact.phones 0 -}}{{- $primaryPhone = .number -}}{{- end -}}{{- end -}}
+
 <header class="site-header">
     <div class="header-top">
         <div class="container">
             <div class="header-top-content">
                 <div class="contact-info">
-                    <a href="tel:{{ .Site.Params.phone }}">{{ .Site.Params.phone }}</a>
-                    <a href="mailto:{{ .Site.Params.email }}">{{ .Site.Params.email }}</a>
+                    <a href="tel:{{ replaceRE " " "" $primaryPhone }}">{{ $primaryPhone }}</a>
+                    <a href="mailto:{{ $contact.email }}">{{ $contact.email }}</a>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <div class="header-main">
         <div class="container">
             <div class="header-content">
                 <a href="/" class="logo">
-			<img src="{{ "/images/logo.png" | relURL }}" alt="{{ .Site.Title }}">
+                    <img src="{{ $site.logo | relURL }}" alt="{{ $site.title }}">
                 </a>
-                
+
                 <button class="mobile-menu-toggle" aria-label="Menu">
                     <span></span>
                     <span></span>
                     <span></span>
                 </button>
                 <div class="nav-overlay"></div>
-                
+
                 <nav class="main-nav" id="main-nav">
                     <ul class="nav-menu">
-                        {{ range .Site.Menus.main }}
-                        <li class="nav-item{{ if $.IsMenuCurrent "main" . }} active{{ end }}">
-                            <a href="{{ .URL }}" class="nav-link">{{ .Name }}</a>
-                            {{ if .HasChildren }}
+                        {{ range sort $menu.items "weight" }}
+                        {{- $hasChildren := and .children (gt (len .children) 0) -}}
+                        <li class="nav-item{{ if eq $.RelPermalink .url }} active{{ end }}">
+                            <a href="{{ .url }}" class="nav-link">{{ .name }}</a>
+                            {{ if $hasChildren }}
                             <ul class="sub-menu">
-                                {{ range .Children }}
-                                <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+                                {{ range .children }}
+                                <li><a href="{{ .url }}">{{ .name }}</a></li>
                                 {{ end }}
                             </ul>
                             {{ end }}
@@ -40,9 +48,9 @@
                         {{ end }}
                     </ul>
                 </nav>
-                
-                <a href="{{ "/kontakty/" | relURL }}" class="btn btn-primary header-cta">
-                    Зв'язатися
+
+                <a href="{{ $site.header_cta_url | relURL }}" class="btn btn-primary header-cta">
+                    {{ $site.header_cta_label }}
                 </a>
             </div>
         </div>

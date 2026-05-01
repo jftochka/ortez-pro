@@ -1,0 +1,114 @@
+{{- $site := .Site.Data.site -}}
+{{- $seo := .Site.Data.seo -}}
+{{- $contact := .Site.Data.contact -}}
+{{- $business := $seo.business -}}
+{{- $primaryPhone := "" -}}
+{{- range $contact.phones -}}{{- if .primary -}}{{- $primaryPhone = .number -}}{{- end -}}{{- end -}}
+{{- if not $primaryPhone -}}{{- with index $contact.phones 0 -}}{{- $primaryPhone = .number -}}{{- end -}}{{- end -}}
+{{- $logoAbs := printf "%s%s" .Site.BaseURL (strings.TrimPrefix "/" $site.logo) -}}
+{{- $imageAbs := printf "%s%s" .Site.BaseURL (strings.TrimPrefix "/" (or $site.default_og_image $site.logo)) -}}
+
+{{/* Build areaServed list */}}
+{{- $areaServed := slice -}}
+{{- range $business.area_served -}}
+  {{- $areaServed = $areaServed | append (dict "@type" "AdministrativeArea" "name" .) -}}
+{{- end -}}
+
+{{/* Build openingHours list (skip closed days) */}}
+{{- $openingHours := slice -}}
+{{- range $contact.opening_hours -}}
+  {{- if not .closed -}}
+    {{- $openingHours = $openingHours | append (dict "@type" "OpeningHoursSpecification" "dayOfWeek" .schema_days "opens" .schema_opens "closes" .schema_closes) -}}
+  {{- end -}}
+{{- end -}}
+
+{{/* Build sameAs list */}}
+{{- $sameAs := slice -}}
+{{- range $contact.social_links -}}
+  {{- $sameAs = $sameAs | append .url -}}
+{{- end -}}
+
+{{/* Build offer catalog */}}
+{{- $offers := slice -}}
+{{- range $business.service_types -}}
+  {{- $offers = $offers | append (dict "@type" "Offer" "itemOffered" (dict "@type" "MedicalProcedure" "name" .)) -}}
+{{- end -}}
+
+{{- $businessSchema := dict
+  "@context" "https://schema.org"
+  "@type" $business.schema_types
+  "@id" (printf "%s#business" .Site.BaseURL)
+  "name" $business.legal_name
+  "alternateName" $site.title
+  "description" $business.description
+  "url" .Site.BaseURL
+  "logo" $logoAbs
+  "image" $imageAbs
+  "foundingDate" $business.founding_date
+  "priceRange" $business.price_range
+  "telephone" $primaryPhone
+  "email" $contact.email
+  "address" (dict
+    "@type" "PostalAddress"
+    "streetAddress" $contact.address.street
+    "addressLocality" $contact.address.locality
+    "addressRegion" $contact.address.region
+    "postalCode" $contact.address.postal_code
+    "addressCountry" $contact.address.country_code)
+  "geo" (dict
+    "@type" "GeoCoordinates"
+    "latitude" $contact.geo.latitude
+    "longitude" $contact.geo.longitude)
+  "areaServed" $areaServed
+  "openingHoursSpecification" $openingHours
+  "sameAs" $sameAs
+  "hasOfferCatalog" (dict
+    "@type" "OfferCatalog"
+    "name" "Послуги"
+    "itemListElement" $offers)
+-}}
+
+<script type="application/ld+json">{{ $businessSchema | jsonify (dict "indent" "  ") | safeJS }}</script>
+
+{{/* BreadcrumbList for non-home pages */}}
+{{- if not .IsHome -}}
+{{- $crumbs := slice (dict "@type" "ListItem" "position" 1 "name" "Головна" "item" .Site.BaseURL) -}}
+{{- if .Section -}}
+  {{- $sectionPage := .Site.GetPage (printf "/%s" .Section) -}}
+  {{- $sectionName := .Section -}}
+  {{- if $sectionPage -}}{{- $sectionName = $sectionPage.Title -}}{{- end -}}
+  {{- $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 2 "name" $sectionName "item" (printf "%s%s/" .Site.BaseURL .Section)) -}}
+{{- end -}}
+{{- if and .IsPage .Section -}}
+  {{- $crumbs = $crumbs | append (dict "@type" "ListItem" "position" 3 "name" .Title "item" .Permalink) -}}
+{{- end -}}
+{{- $bcSchema := dict "@context" "https://schema.org" "@type" "BreadcrumbList" "itemListElement" $crumbs -}}
+<script type="application/ld+json">{{ $bcSchema | jsonify (dict "indent" "  ") | safeJS }}</script>
+{{- end -}}
+
+{{/* Product schema for orthose/prosthesis/insole pages */}}
+{{- if and .IsPage (in (slice "ortezy" "protezy" "ortopedychni-ustilky") .Section) -}}
+{{- $productImage := or .Params.mainImage .Params.image .Params.headerImage $site.default_og_image -}}
+{{- $productImageAbs := cond (hasPrefix $productImage "http") $productImage (printf "%s%s" .Site.BaseURL (strings.TrimPrefix "/" $productImage)) -}}
+{{- $productSchema := dict
+  "@context" "https://schema.org"
+  "@type" "Product"
+  "name" .Title
+  "description" (or .Description .Summary $business.description)
+  "image" $productImageAbs
+  "brand" (dict "@type" "Brand" "name" $site.title)
+  "manufacturer" (dict "@id" (printf "%s#business" .Site.BaseURL))
+  "category" .Section -}}
+<script type="application/ld+json">{{ $productSchema | jsonify (dict "indent" "  ") | safeJS }}</script>
+{{- end -}}
+
+{{/* FAQPage schema (when seo.faq is set in front matter) */}}
+{{- $faq := (.Params.seo).faq | default slice -}}
+{{- if $faq -}}
+{{- $questions := slice -}}
+{{- range $faq -}}
+  {{- $questions = $questions | append (dict "@type" "Question" "name" .question "acceptedAnswer" (dict "@type" "Answer" "text" .answer)) -}}
+{{- end -}}
+{{- $faqSchema := dict "@context" "https://schema.org" "@type" "FAQPage" "mainEntity" $questions -}}
+<script type="application/ld+json">{{ $faqSchema | jsonify (dict "indent" "  ") | safeJS }}</script>
+{{- end -}}

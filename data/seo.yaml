@@ -1,0 +1,25 @@
+# SEO та структуровані дані -- редагується через CMS
+
+business:
+  schema_types: ["MedicalBusiness", "Orthotist"]
+  legal_name: "Ортез-Про"
+  founding_date: "2001"
+  description: "Протезно-ортопедичне підприємство Ортез-Про. Виготовлення індивідуальних ортезів, протезів та ортопедичних устілок у Києві."
+  price_range: "₴₴"
+  area_served:
+    - "Київ"
+    - "Київська область"
+    - "Україна"
+  service_types:
+    - "Виготовлення ортезів"
+    - "Виготовлення протезів"
+    - "Ортопедичні устілки"
+    - "Реабілітація"
+
+defaults:
+  og_type: "website"
+  og_locale: "uk_UA"
+  twitter_card: "summary_large_image"
+  geo_region: "UA-32"
+  geo_placename: "Kyiv"
+  default_image: "/images/logo.png"

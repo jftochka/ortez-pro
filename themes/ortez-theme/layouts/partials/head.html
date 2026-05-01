@@ -1,16 +1,66 @@
+{{- $site := .Site.Data.site -}}
+{{- $seo := .Site.Data.seo -}}
+{{- $contact := .Site.Data.contact -}}
+{{- $pageSeo := .Params.seo | default dict -}}
+
+{{- $title := or (index $pageSeo "seo_title") .Title $site.title -}}
+{{- $fullTitle := cond .IsHome $site.title (printf "%s | %s" $title $site.title) -}}
+{{- $description := or (index $pageSeo "seo_description") .Description .Summary $seo.business.description $site.description -}}
+{{- $image := or (index $pageSeo "og_image") .Params.image .Params.mainImage .Params.headerImage $seo.defaults.default_image $site.default_og_image -}}
+{{- $imageAbs := cond (hasPrefix $image "http") $image (printf "%s%s" .Site.BaseURL (strings.TrimPrefix "/" $image)) -}}
+{{- $canonical := or (index $pageSeo "canonical") .Permalink -}}
+{{- $noindex := or (index $pageSeo "noindex") (eq .Section "admin") -}}
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://code.jquery.com https://cdn.jsdelivr.net https://www.googletagmanager.com https://www.google-analytics.com 'unsafe-inline'; style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com; frame-src https://www.google.com; connect-src 'self' https://www.google-analytics.com https://api.web3forms.com; font-src 'self';">
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-89B6QW9E7W"></script>
+<title>{{ $fullTitle }}</title>
+<meta name="description" content="{{ $description }}">
+<link rel="canonical" href="{{ $canonical }}">
+{{ if $noindex }}<meta name="robots" content="noindex, nofollow">{{ else }}<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">{{ end }}
+{{ with $site.author }}<meta name="author" content="{{ . }}">{{ end }}
+
+<!-- Geo / Local SEO -->
+<meta name="geo.region" content="{{ $seo.defaults.geo_region }}">
+<meta name="geo.placename" content="{{ $seo.defaults.geo_placename }}">
+<meta name="geo.position" content="{{ $contact.geo.latitude }};{{ $contact.geo.longitude }}">
+<meta name="ICBM" content="{{ $contact.geo.latitude }}, {{ $contact.geo.longitude }}">
+
+<!-- Open Graph -->
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}{{ $seo.defaults.og_type }}{{ end }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $description }}">
+<meta property="og:url" content="{{ $canonical }}">
+<meta property="og:image" content="{{ $imageAbs }}">
+<meta property="og:image:alt" content="{{ $title }}">
+<meta property="og:site_name" content="{{ $site.title }}">
+<meta property="og:locale" content="{{ $seo.defaults.og_locale }}">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="{{ $seo.defaults.twitter_card }}">
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $description }}">
+<meta name="twitter:image" content="{{ $imageAbs }}">
+
+<!-- Hreflang (uk + x-default) -->
+<link rel="alternate" hreflang="uk" href="{{ $canonical }}">
+<link rel="alternate" hreflang="x-default" href="{{ $canonical }}">
+
+<!-- Favicon -->
+{{ with $site.favicon }}<link rel="icon" href="{{ . | relURL }}">{{ end }}
+
+<!-- Google Analytics (conditional on GA ID being set) -->
+{{ with $site.google_analytics_id }}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ . }}"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-89B6QW9E7W');
+  gtag('config', '{{ . }}');
 </script>
-<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
-<title>{{ .Title }} | {{ .Site.Title }}</title>
+{{ end }}
 
 <!-- Preconnect to external domains -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -22,10 +72,21 @@
 {{ $style := resources.Get "css/style.css" | fingerprint }}
 <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}">
 
-<!-- Non-critical CSS - load async -->
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<!-- Non-critical CSS - load async with SRI -->
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" as="style"
+  integrity="sha384-MUdXdzn1OB/0zkr4yGLnCqZ/n9ut5N7Ifes9RP2d5xKsTtcPiuiwthWczWuiqFOn"
+  crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" as="style"
+  integrity="sha384-3wRRg17hVCopINZVYCqnfbgXE7aFPSvawmLWNPSiUPVx+HxY+yxb5Cwp5mT7RXPD"
+  crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'">
 <noscript>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
+      integrity="sha384-MUdXdzn1OB/0zkr4yGLnCqZ/n9ut5N7Ifes9RP2d5xKsTtcPiuiwthWczWuiqFOn"
+      crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"
+      integrity="sha384-3wRRg17hVCopINZVYCqnfbgXE7aFPSvawmLWNPSiUPVx+HxY+yxb5Cwp5mT7RXPD"
+      crossorigin="anonymous">
 </noscript>
+
+<!-- Structured Data (JSON-LD) -->
+{{ partial "schema.html" . }}

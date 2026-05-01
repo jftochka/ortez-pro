@@ -1,0 +1,103 @@
+<!-- Lightbox Modal -->
+<div class="lightbox-modal" id="lightbox-modal" role="dialog" aria-modal="true" aria-label="Gallery viewer">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+    <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous">&#10094;</button>
+    <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next">&#10095;</button>
+    <div class="lightbox-content">
+        <img id="lightbox-img" src="" alt="Gallery image">
+    </div>
+</div>
+
+<script>
+(function() {
+    var modal = document.getElementById('lightbox-modal');
+    var img = document.getElementById('lightbox-img');
+    var closeBtn = document.getElementById('lightbox-close');
+    var prevBtn = document.getElementById('lightbox-prev');
+    var nextBtn = document.getElementById('lightbox-next');
+    var currentItems = [];
+    var currentIndex = 0;
+
+    function collectItems() {
+        currentItems = Array.prototype.slice.call(
+            document.querySelectorAll('[data-lightbox-src]')
+        );
+    }
+
+    function openLightbox(index) {
+        collectItems();
+        if (index < 0 || index >= currentItems.length) return;
+        currentIndex = index;
+        var src = currentItems[currentIndex].getAttribute('data-lightbox-src');
+        if (!src || src.indexOf('/images/') !== 0) return;
+        img.src = src;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        updateNav();
+    }
+
+    function closeLightbox() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        img.src = '';
+    }
+
+    function showPrev() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            img.src = currentItems[currentIndex].getAttribute('data-lightbox-src');
+            updateNav();
+        }
+    }
+
+    function showNext() {
+        if (currentIndex < currentItems.length - 1) {
+            currentIndex++;
+            img.src = currentItems[currentIndex].getAttribute('data-lightbox-src');
+            updateNav();
+        }
+    }
+
+    function updateNav() {
+        prevBtn.style.display = currentIndex > 0 ? '' : 'none';
+        nextBtn.style.display = currentIndex < currentItems.length - 1 ? '' : 'none';
+    }
+
+    document.addEventListener('click', function(e) {
+        var item = e.target.closest('[data-lightbox-src]');
+        if (item) {
+            e.preventDefault();
+            collectItems();
+            var idx = currentItems.indexOf(item);
+            if (idx !== -1) openLightbox(idx);
+        }
+    });
+
+    closeBtn.addEventListener('click', closeLightbox);
+    prevBtn.addEventListener('click', showPrev);
+    nextBtn.addEventListener('click', showNext);
+
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) closeLightbox();
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (!modal.classList.contains('active')) return;
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowLeft') showPrev();
+        if (e.key === 'ArrowRight') showNext();
+    });
+
+    var touchStartX = 0;
+    modal.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    modal.addEventListener('touchend', function(e) {
+        var diff = e.changedTouches[0].screenX - touchStartX;
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) showPrev();
+            else showNext();
+        }
+    }, { passive: true });
+})();
+</script>

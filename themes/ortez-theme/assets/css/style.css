@@ -1224,6 +1224,60 @@ main {
     font-size: 3rem;
     cursor: pointer;
     line-height: 1;
+    background: none;
+    border: none;
+    z-index: 10001;
+    padding: 5px 10px;
+}
+
+.lightbox-close:hover {
+    color: var(--primary);
+}
+
+.lightbox-content img {
+    max-width: 90vw;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 15px 12px;
+    z-index: 10001;
+    border-radius: 4px;
+    transition: background 0.2s ease;
+}
+
+.lightbox-nav:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+.lightbox-prev {
+    left: 15px;
+}
+
+.lightbox-next {
+    right: 15px;
+}
+
+@media (max-width: 768px) {
+    .lightbox-nav {
+        font-size: 1.5rem;
+        padding: 10px 8px;
+    }
+    .lightbox-close {
+        top: 10px;
+        right: 15px;
+        font-size: 2.5rem;
+    }
 }
 
 .gallery-item {

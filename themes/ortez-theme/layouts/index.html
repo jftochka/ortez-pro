@@ -1,63 +1,48 @@
 {{ define "main" }}
-<section class="hero-full">
+{{- $site := .Site.Data.site -}}
+{{- $contact := .Site.Data.contact -}}
+{{- $hp := .Site.Data.homepage -}}
+{{- $primaryPhone := "" -}}
+{{- range $contact.phones -}}{{- if .primary -}}{{- $primaryPhone = .number -}}{{- end -}}{{- end -}}
+{{- if not $primaryPhone -}}{{- with index $contact.phones 0 -}}{{- $primaryPhone = .number -}}{{- end -}}{{- end -}}
+{{- $heroHeadline := or $hp.hero.headline $site.title -}}
+{{- $heroHref := cond (eq $hp.hero.cta_type "url") $hp.hero.cta_url (printf "tel:%s" (replaceRE " " "" $primaryPhone)) -}}
+
+<section class="hero-full"{{ with $hp.hero.background_image }} style="background-image: linear-gradient(rgba(37, 183, 151, 0.85), rgba(2, 116, 190, 0.85)), url('{{ . }}'); background-size: cover; background-position: center;"{{ end }}>
     <div class="container">
-        <h1>{{ .Site.Title }}</h1>
-        <p class="subtitle">Виготовлення протезно-ортопедичної продукції за індивідуальним замовленням</p>
-        <a href="tel:{{ .Site.Params.phone | replaceRE ` ` `` }}" class="btn btn-primary">Запис на консультацію</a>
+        <h1>{{ $heroHeadline }}</h1>
+        <p class="subtitle">{{ $hp.hero.subtitle }}</p>
+        <a href="{{ $heroHref }}" class="btn btn-primary">{{ $hp.hero.cta_label }}</a>
     </div>
 </section>
 
 <section class="section">
     <div class="container">
-        <h2 class="text-center mb-5">Послуги</h2>
+        <h2 class="text-center mb-5">{{ $hp.services.section_title }}</h2>
         <div class="services-carousel">
+            {{ range $hp.services.items }}
             <div class="carousel-item">
-                <a href="{{ `/ortezy/systemy-orteziv-na-verhni-kinczivky/` | relURL }}">
-                    <img src="{{ `/images/ortez_verhnij_bezsharnirnyj-1024x706.png` | relURL }}" alt="Ортези верхні">
-                    <h4 class="mt-2">Ортези верхні</h4>
+                <a href="{{ .url | relURL }}">
+                    <img src="{{ .image | relURL }}" alt="{{ .alt | default .title }}" loading="lazy">
+                    <h4 class="mt-2">{{ .title }}</h4>
                 </a>
             </div>
-            <div class="carousel-item">
-                <a href="{{ `/ortezy/systemy-orteziv-na-verhni-kinczivky/` | relURL }}">
-                    <img src="{{ `/images/ortez_verhni_sharnirnyj-1024x706.png` | relURL }}" alt="Ортези шарнірні">
-                    <h4 class="mt-2">Ортези шарнірні</h4>
-                </a>
-            </div>
-            <div class="carousel-item">
-                <a href="{{ `/protezy/systemy-proteziv-na-nyzhni-kinczivky/` | relURL }}">
-                    <img src="{{ `/images/protez_nyzhni-1024x706.png` | relURL }}" alt="Протези нижні">
-                    <h4 class="mt-2">Протези нижні</h4>
-                </a>
-            </div>
-            <div class="carousel-item">
-                <a href="{{ `/ortezy/systemy-orteziv-na-nyzhni-kinczivky/` | relURL }}">
-                    <img src="{{ `/images/ortez_nyzhni_bezsharnirnyj-1024x706.png` | relURL }}" alt="Ортези нижні">
-                    <h4 class="mt-2">Ортези нижні</h4>
-                </a>
-            </div>
+            {{ end }}
         </div>
     </div>
 </section>
 
 <section class="section" style="background:#f8f9fa;">
     <div class="container">
-        <h2 class="text-center mb-5">Наші партнери</h2>
+        <h2 class="text-center mb-5">{{ $hp.partners.section_title }}</h2>
         <div class="partners-grid" style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 40px; padding: 40px 0;">
+            {{ range $hp.partners.items }}
             <div class="partner-item" style="flex: 0 1 180px; display: flex; justify-content: center; align-items: center;">
-                <img src="{{ `/images/1280px-Otto_Bock_logo.svg.png` | relURL }}" alt="Ottobock" style="max-height: 80px; max-width: 100%; object-fit: contain;">
+                {{ if .url }}<a href="{{ .url }}" target="_blank" rel="noopener noreferrer">{{ end }}
+                <img src="{{ .image | relURL }}" alt="{{ .name }}" style="max-height: 80px; max-width: 100%; object-fit: contain;" loading="lazy">
+                {{ if .url }}</a>{{ end }}
             </div>
-            <div class="partner-item" style="flex: 0 1 180px; display: flex; justify-content: center; align-items: center;">
-                <img src="{{ `/images/minsocpol-300x300.png` | relURL }}" alt="Міністерство соціальної політики України" style="max-height: 80px; max-width: 100%; object-fit: contain;">
-            </div>
-            <div class="partner-item" style="flex: 0 1 180px; display: flex; justify-content: center; align-items: center;">
-                <img src="{{ `/images/ntdmq_bmeia1345435-300x252.png` | relURL }}" alt="Київський міський центр соціальних служб" style="max-height: 80px; max-width: 100%; object-fit: contain;">
-            </div>
-            <div class="partner-item" style="flex: 0 1 180px; display: flex; justify-content: center; align-items: center;">
-                <img src="{{ `/images/okm5345345-300x300.png` | relURL }}" alt="OKM Orthopedics" style="max-height: 80px; max-width: 100%; object-fit: contain;">
-            </div>
-            <div class="partner-item" style="flex: 0 1 180px; display: flex; justify-content: center; align-items: center;">
-                <img src="{{ `/images/logo34534-300x300.png` | relURL }}" alt="Українське протезно-ортопедичне об'єднання" style="max-height: 80px; max-width: 100%; object-fit: contain;">
-            </div>
+            {{ end }}
         </div>
     </div>
 </section>

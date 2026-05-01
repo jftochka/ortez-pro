@@ -1,0 +1,385 @@
+backend:
+  name: github
+  repo: jftochka/ortez-pro
+  branch: main
+
+publish_mode: editorial_workflow
+
+media_folder: static/images
+public_folder: /images
+
+locale: uk
+
+slug:
+  encoding: "unicode"
+  clean_accents: false
+
+collections:
+  # ─── Налаштування сайту (data files) ─────────────────────────────
+  - name: "site_settings"
+    label: "Налаштування сайту"
+    label_singular: "Налаштування"
+    description: "Глобальні налаштування, що відображаються на всіх сторінках"
+    files:
+      - label: "Загальні налаштування"
+        name: "site"
+        file: "data/site.yaml"
+        format: "yaml"
+        description: "Назва сайту, логотип, кольори, GA, копірайт"
+        fields:
+          - { label: "Назва сайту", name: "title", widget: "string" }
+          - { label: "Коротка назва (PWA)", name: "short_name", widget: "string", required: false }
+          - { label: "Опис сайту", name: "description", widget: "text" }
+          - { label: "Слоган / підзаголовок", name: "tagline", widget: "string", required: false }
+          - { label: "Автор", name: "author", widget: "string", required: false }
+          - { label: "Мова (BCP-47)", name: "language", widget: "string", default: "uk-UA" }
+          - { label: "Локаль (OG)", name: "locale", widget: "string", default: "uk_UA" }
+          - { label: "Логотип", name: "logo", widget: "image" }
+          - { label: "OG-зображення за замовчуванням", name: "default_og_image", widget: "image", required: false, hint: "Зображення для соцмереж 1200x630px" }
+          - { label: "Favicon", name: "favicon", widget: "image", required: false }
+          - { label: "Основний колір", name: "primary_color", widget: "string", default: "#25b797", hint: "HEX-код, наприклад #25b797" }
+          - { label: "Додатковий колір", name: "secondary_color", widget: "string", default: "#0274be", hint: "HEX-код, наприклад #0274be" }
+          - { label: "Google Analytics ID", name: "google_analytics_id", widget: "string", required: false, hint: "Наприклад G-XXXXXXXXXX. Залиште порожнім, щоб вимкнути" }
+          - { label: "Текст CTA в шапці", name: "header_cta_label", widget: "string" }
+          - { label: "Посилання CTA в шапці", name: "header_cta_url", widget: "string" }
+          - { label: "Шаблон тексту копірайту", name: "footer_copyright_template", widget: "string", hint: "%YEAR% буде замінено на поточний рік" }
+
+      - label: "Контактна інформація"
+        name: "contact"
+        file: "data/contact.yaml"
+        format: "yaml"
+        description: "Телефони, адреса, графік, соцмережі, карта, форма"
+        fields:
+          - label: "Телефони"
+            name: "phones"
+            widget: "list"
+            min: 1
+            fields:
+              - { label: "Номер телефону", name: "number", widget: "string", pattern: ['^\+\d', "Номер має починатися з + (формат E.164)"] }
+              - { label: "Підпис", name: "label", widget: "string", required: false, hint: "Наприклад: Мобільний, Стаціонарний" }
+              - { label: "Основний номер", name: "primary", widget: "boolean", default: false, hint: "Використовується в шапці та кнопці виклику" }
+          - { label: "Email", name: "email", widget: "string", pattern: ['^[^@\s]+@[^@\s]+\.[^@\s]+$', "Невірний формат email"] }
+          - label: "Адреса"
+            name: "address"
+            widget: "object"
+            fields:
+              - { label: "Вулиця та будинок", name: "street", widget: "string" }
+              - { label: "Місто", name: "locality", widget: "string", default: "Київ" }
+              - { label: "Область", name: "region", widget: "string", default: "Київ" }
+              - { label: "Код регіону (ISO 3166-2)", name: "region_code", widget: "string", default: "UA-32", hint: "UA-32 = м. Київ" }
+              - { label: "Поштовий індекс", name: "postal_code", widget: "string" }
+              - { label: "Країна", name: "country", widget: "string", default: "Україна" }
+              - { label: "Код країни (ISO 3166-1)", name: "country_code", widget: "string", default: "UA" }
+              - { label: "Адреса для відображення", name: "formatted", widget: "string", hint: "Повна адреса одним рядком" }
+          - label: "Геокоординати"
+            name: "geo"
+            widget: "object"
+            hint: "Знайдіть на Google Maps: правий клік на точці > координати"
+            fields:
+              - { label: "Широта (latitude)", name: "latitude", widget: "number", value_type: "float", step: 0.000001 }
+              - { label: "Довгота (longitude)", name: "longitude", widget: "number", value_type: "float", step: 0.000001 }
+          - label: "Графік роботи"
+            name: "opening_hours"
+            widget: "list"
+            fields:
+              - { label: "Дні (для відображення)", name: "days", widget: "string", hint: "Наприклад: Пн-Пт" }
+              - { label: "Години (для відображення)", name: "hours", widget: "string", hint: "Наприклад: 09:00 - 18:00" }
+              - { label: "Дні тижня (Schema.org)", name: "schema_days", widget: "select", multiple: true, options: ["Mo","Tu","We","Th","Fr","Sa","Su"], required: false }
+              - { label: "Час відкриття", name: "schema_opens", widget: "string", required: false, default: "", hint: "Формат HH:MM, наприклад 09:00" }
+              - { label: "Час закриття", name: "schema_closes", widget: "string", required: false, default: "", hint: "Формат HH:MM, наприклад 18:00" }
+              - { label: "Вихідний день", name: "closed", widget: "boolean", default: false }
+          - label: "Соціальні мережі"
+            name: "social_links"
+            widget: "list"
+            fields:
+              - { label: "Платформа", name: "platform", widget: "select", options: ["viber","facebook","instagram","telegram","youtube","tiktok","twitter","linkedin","whatsapp"] }
+              - { label: "Назва кнопки", name: "label", widget: "string" }
+              - { label: "Посилання (URL)", name: "url", widget: "string" }
+              - { label: "Колір кнопки (HEX)", name: "color", widget: "string", required: false, hint: "Наприклад #7360f2 для Viber" }
+          - label: "Карта Google"
+            name: "map"
+            widget: "object"
+            fields:
+              - { label: "Embed src URL", name: "embed_src", widget: "string", hint: "Скопіюйте з Google Maps: Поділитись > Вставити карту" }
+          - label: "Форма зворотного зв'язку"
+            name: "forms"
+            widget: "object"
+            fields:
+              - { label: "Web3Forms Access Key", name: "web3forms_key", widget: "string", hint: "Отримайте на web3forms.com" }
+              - { label: "Тема листа", name: "feedback_subject", widget: "string" }
+              - { label: "URL після надсилання", name: "feedback_redirect", widget: "string" }
+
+      - label: "Головна сторінка"
+        name: "homepage"
+        file: "data/homepage.yaml"
+        format: "yaml"
+        description: "Hero блок, послуги, партнери на головній"
+        fields:
+          - label: "Hero блок"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Заголовок (h1)", name: "headline", widget: "string", required: false, hint: "Залиште порожнім, щоб використати назву сайту" }
+              - { label: "Підзаголовок", name: "subtitle", widget: "text" }
+              - { label: "Текст кнопки", name: "cta_label", widget: "string" }
+              - { label: "Тип CTA", name: "cta_type", widget: "select", options: [{label: "Телефон (tel:)", value: "phone"}, {label: "URL", value: "url"}], default: "phone" }
+              - { label: "URL (якщо тип = URL)", name: "cta_url", widget: "string", required: false }
+              - { label: "Фонове зображення", name: "background_image", widget: "image", required: false }
+          - label: "Послуги"
+            name: "services"
+            widget: "object"
+            fields:
+              - { label: "Заголовок секції", name: "section_title", widget: "string" }
+              - label: "Картки послуг"
+                name: "items"
+                widget: "list"
+                min: 1
+                max: 12
+                fields:
+                  - { label: "Заголовок", name: "title", widget: "string" }
+                  - { label: "Зображення", name: "image", widget: "image" }
+                  - { label: "Посилання", name: "url", widget: "string" }
+                  - { label: "Alt-текст", name: "alt", widget: "string", required: false }
+          - label: "Партнери"
+            name: "partners"
+            widget: "object"
+            fields:
+              - { label: "Заголовок секції", name: "section_title", widget: "string" }
+              - label: "Логотипи партнерів"
+                name: "items"
+                widget: "list"
+                fields:
+                  - { label: "Назва партнера", name: "name", widget: "string" }
+                  - { label: "Логотип", name: "image", widget: "image" }
+                  - { label: "URL (опційно)", name: "url", widget: "string", required: false }
+
+      - label: "Меню навігації"
+        name: "menu"
+        file: "data/menu.yaml"
+        format: "yaml"
+        description: "Структура верхнього меню"
+        fields:
+          - label: "Пункти меню"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "Назва", name: "name", widget: "string" }
+              - { label: "URL", name: "url", widget: "string" }
+              - { label: "Порядок", name: "weight", widget: "number", value_type: "int", default: 1, hint: "Менше число = лівіше в меню" }
+              - label: "Підменю"
+                name: "children"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Назва", name: "name", widget: "string" }
+                  - { label: "URL", name: "url", widget: "string" }
+
+      - label: "SEO та структуровані дані"
+        name: "seo"
+        file: "data/seo.yaml"
+        format: "yaml"
+        description: "Налаштування для пошукових систем (Google, Bing) та структурованих даних"
+        fields:
+          - label: "Інформація про бізнес (для Schema.org)"
+            name: "business"
+            widget: "object"
+            fields:
+              - { label: "Schema.org типи", name: "schema_types", widget: "select", multiple: true, options: ["MedicalBusiness","Orthotist","LocalBusiness","HealthAndBeautyBusiness"], default: ["MedicalBusiness","Orthotist"], hint: "Orthotist = протезно-ортопедичний фахівець" }
+              - { label: "Юридична назва", name: "legal_name", widget: "string" }
+              - { label: "Рік заснування", name: "founding_date", widget: "string", hint: "Формат YYYY або YYYY-MM-DD" }
+              - { label: "Опис для пошукових систем", name: "description", widget: "text", hint: "150-300 символів" }
+              - { label: "Цінова категорія", name: "price_range", widget: "string", default: "₴₴", hint: "₴ дешево, ₴₴ середньо, ₴₴₴ дорого" }
+              - label: "Регіони обслуговування"
+                name: "area_served"
+                widget: "list"
+                field: { label: "Регіон", name: "area", widget: "string" }
+              - label: "Типи послуг"
+                name: "service_types"
+                widget: "list"
+                field: { label: "Послуга", name: "service", widget: "string" }
+          - label: "SEO за замовчуванням"
+            name: "defaults"
+            widget: "object"
+            fields:
+              - { label: "OpenGraph type", name: "og_type", widget: "string", default: "website" }
+              - { label: "OpenGraph locale", name: "og_locale", widget: "string", default: "uk_UA" }
+              - { label: "Twitter card type", name: "twitter_card", widget: "select", options: ["summary","summary_large_image"], default: "summary_large_image" }
+              - { label: "Geo region код", name: "geo_region", widget: "string", default: "UA-32", hint: "ISO 3166-2 для м. Київ = UA-32" }
+              - { label: "Geo placename", name: "geo_placename", widget: "string", default: "Kyiv" }
+              - { label: "OG-зображення за замовчуванням", name: "default_image", widget: "image", required: false }
+
+  # ─── Контент: Ортези ─────────────────────────────────────────────
+  - name: "ortezy"
+    label: "Ортези"
+    label_singular: "Ортез"
+    folder: "content/ortezy"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}}"
+    fields:
+      - { label: "Заголовок", name: "title", widget: "string" }
+      - { label: "Опис", name: "description", widget: "text", required: false }
+      - { label: "Зображення", name: "image", widget: "image", required: false }
+      - { label: "Зображення для заголовку", name: "headerImage", widget: "image", required: false }
+      - label: "Галерея"
+        name: "gallery"
+        widget: "list"
+        required: false
+        field: { label: "Зображення", name: "image", widget: "image" }
+      - { label: "Контент", name: "body", widget: "markdown" }
+      - label: "SEO (опційно)"
+        name: "seo"
+        widget: "object"
+        collapsed: true
+        required: false
+        fields:
+          - { label: "SEO заголовок (override)", name: "seo_title", widget: "string", required: false, hint: "Якщо порожнє -- буде використано звичайний заголовок" }
+          - { label: "Meta-опис", name: "seo_description", widget: "text", required: false, hint: "Рекомендовано 50-160 символів" }
+          - { label: "OG-зображення (override)", name: "og_image", widget: "image", required: false }
+          - { label: "Canonical URL (override)", name: "canonical", widget: "string", required: false }
+          - { label: "Заборонити індексацію", name: "noindex", widget: "boolean", default: false, required: false }
+          - label: "FAQ для Schema.org (опційно)"
+            name: "faq"
+            widget: "list"
+            required: false
+            fields:
+              - { label: "Питання", name: "question", widget: "string" }
+              - { label: "Відповідь", name: "answer", widget: "text" }
+
+  # ─── Контент: Протези ────────────────────────────────────────────
+  - name: "protezy"
+    label: "Протези"
+    label_singular: "Протез"
+    folder: "content/protezy"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}}"
+    fields:
+      - { label: "Заголовок", name: "title", widget: "string" }
+      - { label: "Опис", name: "description", widget: "text", required: false }
+      - { label: "Головне зображення", name: "mainImage", widget: "image", required: false }
+      - { label: "Зображення для заголовку", name: "headerImage", widget: "image", required: false }
+      - label: "Галерея"
+        name: "gallery"
+        widget: "list"
+        required: false
+        field: { label: "Зображення", name: "image", widget: "image" }
+      - { label: "Контент", name: "body", widget: "markdown" }
+      - label: "SEO (опційно)"
+        name: "seo"
+        widget: "object"
+        collapsed: true
+        required: false
+        fields:
+          - { label: "SEO заголовок (override)", name: "seo_title", widget: "string", required: false }
+          - { label: "Meta-опис", name: "seo_description", widget: "text", required: false }
+          - { label: "OG-зображення", name: "og_image", widget: "image", required: false }
+          - { label: "Canonical URL", name: "canonical", widget: "string", required: false }
+          - { label: "Заборонити індексацію", name: "noindex", widget: "boolean", default: false, required: false }
+          - label: "FAQ для Schema.org"
+            name: "faq"
+            widget: "list"
+            required: false
+            fields:
+              - { label: "Питання", name: "question", widget: "string" }
+              - { label: "Відповідь", name: "answer", widget: "text" }
+
+  # ─── Контент: Ортопедичні устілки ────────────────────────────────
+  - name: "ortopedychni-ustilky"
+    label: "Ортопедичні устілки"
+    folder: "content/ortopedychni-ustilky"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}}"
+    fields:
+      - { label: "Заголовок", name: "title", widget: "string" }
+      - { label: "Опис", name: "description", widget: "text", required: false }
+      - label: "Галерея"
+        name: "gallery"
+        widget: "list"
+        required: false
+        field: { label: "Зображення", name: "image", widget: "image" }
+      - { label: "Контент", name: "body", widget: "markdown" }
+      - label: "SEO (опційно)"
+        name: "seo"
+        widget: "object"
+        collapsed: true
+        required: false
+        fields:
+          - { label: "SEO заголовок (override)", name: "seo_title", widget: "string", required: false }
+          - { label: "Meta-опис", name: "seo_description", widget: "text", required: false }
+          - { label: "OG-зображення", name: "og_image", widget: "image", required: false }
+          - { label: "Canonical URL", name: "canonical", widget: "string", required: false }
+          - { label: "Заборонити індексацію", name: "noindex", widget: "boolean", default: false, required: false }
+
+  # ─── Сторінки ────────────────────────────────────────────────────
+  - name: "pages"
+    label: "Сторінки"
+    files:
+      - label: "Головна (контент)"
+        name: "home"
+        file: "content/_index.md"
+        fields:
+          - { label: "Заголовок", name: "title", widget: "string" }
+          - { label: "Опис", name: "description", widget: "text", required: false }
+          - { label: "Контент", name: "body", widget: "markdown" }
+          - label: "SEO (опційно)"
+            name: "seo"
+            widget: "object"
+            collapsed: true
+            required: false
+            fields:
+              - { label: "SEO заголовок", name: "seo_title", widget: "string", required: false }
+              - { label: "Meta-опис", name: "seo_description", widget: "text", required: false }
+              - { label: "OG-зображення", name: "og_image", widget: "image", required: false }
+
+      - label: "Про нас"
+        name: "pro-nas"
+        file: "content/pro-nas.md"
+        fields:
+          - { label: "Заголовок", name: "title", widget: "string" }
+          - { label: "Опис", name: "description", widget: "text", required: false }
+          - { label: "Контент", name: "body", widget: "markdown" }
+          - label: "SEO (опційно)"
+            name: "seo"
+            widget: "object"
+            collapsed: true
+            required: false
+            fields:
+              - { label: "SEO заголовок", name: "seo_title", widget: "string", required: false }
+              - { label: "Meta-опис", name: "seo_description", widget: "text", required: false }
+              - { label: "OG-зображення", name: "og_image", widget: "image", required: false }
+
+      - label: "Як отримати?"
+        name: "yak-otrymaty"
+        file: "content/yak-otrymaty.md"
+        fields:
+          - { label: "Заголовок", name: "title", widget: "string" }
+          - { label: "Опис", name: "description", widget: "text", required: false }
+          - { label: "Контент", name: "body", widget: "markdown" }
+          - label: "SEO та FAQ"
+            name: "seo"
+            widget: "object"
+            collapsed: true
+            required: false
+            fields:
+              - { label: "SEO заголовок", name: "seo_title", widget: "string", required: false }
+              - { label: "Meta-опис", name: "seo_description", widget: "text", required: false }
+              - { label: "OG-зображення", name: "og_image", widget: "image", required: false }
+              - label: "FAQ для Schema.org (питання-відповіді)"
+                name: "faq"
+                widget: "list"
+                required: false
+                hint: "Заповнення цього списку додасть FAQ-розмітку для Google"
+                fields:
+                  - { label: "Питання", name: "question", widget: "string" }
+                  - { label: "Відповідь", name: "answer", widget: "text" }
+
+      - label: "Контакти"
+        name: "kontakty"
+        file: "content/kontakty.md"
+        fields:
+          - { label: "Заголовок", name: "title", widget: "string" }
+          - { label: "Опис", name: "description", widget: "text", required: false }
+          - { label: "Layout", name: "layout", widget: "hidden", default: "kontakty" }
+          - { label: "Додатковий текст (опційно)", name: "body", widget: "markdown", required: false, hint: "Контактна інформація береться з 'Налаштування сайту > Контактна інформація'" }
