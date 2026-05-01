@@ -1,0 +1,17 @@
+name = "ortez-cms-auth"
+main = "src/index.js"
+compatibility_date = "2024-09-01"
+
+# Set the variables below via:
+#   npx wrangler secret put GOOGLE_CLIENT_ID
+#   npx wrangler secret put GOOGLE_CLIENT_SECRET
+#   npx wrangler secret put GITHUB_APP_ID
+#   npx wrangler secret put GITHUB_APP_PRIVATE_KEY
+#   npx wrangler secret put GITHUB_APP_INSTALLATION_ID
+#   npx wrangler secret put ALLOWED_EMAILS
+#   npx wrangler secret put ALLOWED_DOMAINS
+#
+# OR set them in the Cloudflare dashboard:
+#   Workers & Pages > ortez-cms-auth > Settings > Variables and Secrets
+
+# No KV/D1/R2 bindings needed -- this worker is stateless.

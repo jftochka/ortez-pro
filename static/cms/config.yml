@@ -2,6 +2,11 @@ backend:
   name: github
   repo: jftochka/ortez-pro
   branch: main
+  # Кастомний OAuth-проксі (Cloudflare Worker), що приймає Google логін і
+  # повертає короткоживущий GitHub App installation token. Деталі:
+  # cms-auth-worker/README.md. Замініть URL після деплою Worker'а.
+  base_url: https://ortez-cms-auth.YOUR-USERNAME.workers.dev
+  auth_endpoint: auth
 
 publish_mode: editorial_workflow
 
