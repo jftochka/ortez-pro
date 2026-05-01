@@ -4,16 +4,16 @@ backend:
   branch: main
   # Кастомний OAuth-проксі (Cloudflare Worker), що приймає Google логін і
   # повертає короткоживущий GitHub App installation token. Деталі:
-  # cms-auth-worker/README.md. Замініть URL після деплою Worker'а.
+  # cms-auth-worker/README.md.
   base_url: https://cms-auth.ortez.com.ua
   auth_endpoint: auth
 
-publish_mode: editorial_workflow
+# Note: Sveltia CMS does not support `publish_mode: editorial_workflow`
+# (Decap-specific) or top-level `locale`. UI locale is auto-detected.
+# All commits go directly to `branch` -- review via Git history.
 
 media_folder: static/images
 public_folder: /images
-
-locale: uk
 
 slug:
   encoding: "unicode"

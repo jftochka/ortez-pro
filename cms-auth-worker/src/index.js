@@ -46,14 +46,25 @@ export default {
 async function handleAuthInitiate(request, env) {
   const url = new URL(request.url);
 
-  // Verify the CMS that triggered this is on an allowed domain
+  // Sveltia/Decap CMS sends `site_id` query param with the hostname.
+  // Modern browsers may strip Referer on cross-origin popup navigations,
+  // so site_id is the canonical signal. Fall back to Referer for safety.
+  const siteId = (url.searchParams.get('site_id') || '').trim();
   const referrer = request.headers.get('referer') || '';
-  if (!isAllowedReferrer(referrer, env.ALLOWED_DOMAINS)) {
-    return errorPage('Доступ заборонено', `Домен ${refHost(referrer) || '(невідомий)'} не в списку дозволених.`);
+
+  let cmsOrigin = '';
+  let detectedHost = '';
+  if (siteId && isAllowedHost(siteId, env.ALLOWED_DOMAINS)) {
+    cmsOrigin = `https://${siteId}`;
+    detectedHost = siteId;
+  } else if (isAllowedReferrer(referrer, env.ALLOWED_DOMAINS)) {
+    cmsOrigin = refOrigin(referrer);
+    detectedHost = refHost(referrer);
+  } else {
+    detectedHost = siteId || refHost(referrer) || 'невідомий';
+    return errorPage('Доступ заборонено', `Домен (${detectedHost}) не в списку дозволених.`);
   }
 
-  // Pack original CMS origin into the OAuth state so we can validate it on callback
-  const cmsOrigin = refOrigin(referrer);
   const state = base64UrlEncode(JSON.stringify({
     nonce: crypto.randomUUID(),
     origin: cmsOrigin,
@@ -283,8 +294,7 @@ function derLengthHeader(tag, length) {
 // ─── Helpers: origin allowlist ───────────────────────────────────────────────
 function refHost(ref) { try { return new URL(ref).hostname; } catch { return ''; } }
 function refOrigin(ref) { try { return new URL(ref).origin; } catch { return ''; } }
-function isAllowedReferrer(ref, allowedDomains) {
-  const host = refHost(ref);
+function isAllowedHost(host, allowedDomains) {
   if (!host) return false;
   const allowed = (allowedDomains || '').split(',').map(s => s.trim()).filter(Boolean);
   return allowed.some(rule => {
@@ -294,6 +304,9 @@ function isAllowedReferrer(ref, allowedDomains) {
     }
     return host === rule;
   });
+}
+function isAllowedReferrer(ref, allowedDomains) {
+  return isAllowedHost(refHost(ref), allowedDomains);
 }
 
 // ─── Helpers: base64/utf8 ────────────────────────────────────────────────────
@@ -334,8 +347,14 @@ function escapeHtml(s) {
   })[c]);
 }
 
-// Posts the GitHub token back to the opener (Sveltia CMS) using the Decap-CMS
-// handshake: opener listens for "authorization:github:success:{token}".
+// Posts the GitHub token back to the opener (Sveltia CMS).
+// Sveltia handshake protocol:
+//   1. Opener listens for "authorizing:github" from popup
+//   2. Popup posts "authorizing:github" on load
+//   3. Opener echoes back "authorizing:github"
+//   4. Popup posts final "authorization:github:success:{json}"
+// Sveltia expects payload shape { token, refreshToken? }.
+// Decap CMS uses { token, provider } -- we include both for compatibility.
 function successPage(githubToken, email, cmsOrigin) {
   const payload = JSON.stringify({ token: githubToken, provider: 'github' });
   const message = `authorization:github:success:${payload}`;
@@ -379,7 +398,12 @@ function successPage(githubToken, email, cmsOrigin) {
 }
 
 function errorPage(title, detail, cmsOrigin) {
-  const payload = JSON.stringify({ message: `${title}: ${detail}` });
+  // Sveltia expects { error, errorCode }; Decap expects { message }. Send both.
+  const payload = JSON.stringify({
+    error: `${title}: ${detail}`,
+    errorCode: 'AUTH_FAILED',
+    message: `${title}: ${detail}`,
+  });
   const message = `authorization:github:error:${payload}`;
   const targetOrigin = cmsOrigin || '*';
   const html = `<!DOCTYPE html>
