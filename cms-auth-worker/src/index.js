@@ -33,14 +33,119 @@ export default {
     try {
       if (url.pathname === '/auth') return await handleAuthInitiate(request, env);
       if (url.pathname === '/callback') return await handleCallback(request, env);
+      if (url.pathname.startsWith('/github/') || url.pathname === '/github') {
+        return await handleGithubProxy(request, env);
+      }
       if (url.pathname === '/' || url.pathname === '') return new Response('Sveltia CMS auth bridge OK', { status: 200 });
       return new Response('Not found', { status: 404 });
     } catch (err) {
       console.error('Worker error:', err && err.stack || err);
-      return errorPage('Внутрішня помилка сервера авторизації', String(err && err.message || err));
+      return new Response(JSON.stringify({ error: String(err && err.message || err) }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json', ...corsHeaders(request, env) },
+      });
     }
   },
 };
+
+// ─── GitHub API proxy ────────────────────────────────────────────────────────
+// Sveltia/Decap CMS calls api.github.com directly using the token we issued.
+// GitHub App *installation* tokens cannot access /user (it is user-scoped),
+// so we proxy via this endpoint:
+//   - /github/user           -> synthetic bot identity (no upstream call)
+//   - /github/<rest>         -> forwarded to api.github.com/<rest>
+// CORS is enforced -- only allowlisted CMS origins may use this proxy.
+async function handleGithubProxy(request, env) {
+  const cors = corsHeaders(request, env);
+
+  if (request.method === 'OPTIONS') {
+    return new Response(null, { status: 204, headers: cors });
+  }
+
+  // Block calls from origins not in ALLOWED_DOMAINS
+  const origin = request.headers.get('origin') || '';
+  const originHost = (() => { try { return new URL(origin).hostname; } catch { return ''; } })();
+  if (originHost && !isAllowedHost(originHost, env.ALLOWED_DOMAINS)) {
+    return new Response(JSON.stringify({ error: 'Origin not allowed' }), {
+      status: 403,
+      headers: { 'Content-Type': 'application/json', ...cors },
+    });
+  }
+
+  const url = new URL(request.url);
+  const ghPath = url.pathname.replace(/^\/github/, '') || '/';
+
+  // Synthetic /user endpoint -- installation tokens can't reach this on GitHub
+  if (ghPath === '/user' || ghPath === '/user/') {
+    const body = JSON.stringify({
+      login: 'ortez-pro-cms-bot',
+      id: 0,
+      node_id: 'BOT_kgDOAAAAAA',
+      avatar_url: 'https://avatars.githubusercontent.com/u/0?v=4',
+      html_url: 'https://github.com/apps/ortez-pro-cms-bot',
+      type: 'Bot',
+      name: 'Ortez-Pro CMS',
+      email: null,
+      site_admin: false,
+    });
+    return new Response(body, {
+      status: 200,
+      headers: { 'Content-Type': 'application/json; charset=utf-8', ...cors },
+    });
+  }
+
+  // Forward everything else to api.github.com
+  const upstreamUrl = `https://api.github.com${ghPath}${url.search}`;
+  const upstreamHeaders = new Headers();
+  const auth = request.headers.get('authorization');
+  if (auth) upstreamHeaders.set('Authorization', auth);
+  upstreamHeaders.set(
+    'Accept',
+    request.headers.get('accept') || 'application/vnd.github+json'
+  );
+  const ct = request.headers.get('content-type');
+  if (ct) upstreamHeaders.set('Content-Type', ct);
+  upstreamHeaders.set('X-GitHub-Api-Version', '2022-11-28');
+  upstreamHeaders.set('User-Agent', 'sveltia-cms-auth-bridge');
+
+  const init = {
+    method: request.method,
+    headers: upstreamHeaders,
+    redirect: 'follow',
+  };
+  if (!['GET', 'HEAD'].includes(request.method)) {
+    init.body = await request.arrayBuffer();
+  }
+
+  const upstreamRes = await fetch(upstreamUrl, init);
+  const resHeaders = new Headers(upstreamRes.headers);
+  // Strip headers that don't make sense to pass through
+  resHeaders.delete('content-encoding');
+  resHeaders.delete('transfer-encoding');
+  resHeaders.delete('content-length');
+  // Always add CORS so the browser accepts the response
+  for (const [k, v] of Object.entries(cors)) resHeaders.set(k, v);
+
+  return new Response(upstreamRes.body, {
+    status: upstreamRes.status,
+    statusText: upstreamRes.statusText,
+    headers: resHeaders,
+  });
+}
+
+function corsHeaders(request, env) {
+  const origin = request.headers.get('origin') || '';
+  const originHost = (() => { try { return new URL(origin).hostname; } catch { return ''; } })();
+  const allowOrigin = (originHost && isAllowedHost(originHost, env.ALLOWED_DOMAINS)) ? origin : '';
+  return {
+    'Access-Control-Allow-Origin': allowOrigin,
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+    'Access-Control-Allow-Headers': 'Authorization, Content-Type, X-GitHub-Api-Version, Accept, If-None-Match, If-Modified-Since',
+    'Access-Control-Expose-Headers': 'ETag, Link, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset',
+    'Access-Control-Max-Age': '86400',
+    'Vary': 'Origin',
+  };
+}
 
 // ─── Step 1: redirect popup to Google ────────────────────────────────────────
 async function handleAuthInitiate(request, env) {

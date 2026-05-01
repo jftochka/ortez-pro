@@ -7,6 +7,9 @@ backend:
   # cms-auth-worker/README.md.
   base_url: https://cms-auth.ortez.com.ua
   auth_endpoint: auth
+  # Проксі-маршрут до api.github.com через наш Worker. GitHub App installation
+  # tokens не дозволяють /user, тому ми синтезуємо /user і пересилаємо все інше.
+  api_root: https://cms-auth.ortez.com.ua/github
 
 # Note: Sveltia CMS does not support `publish_mode: editorial_workflow`
 # (Decap-specific) or top-level `locale`. UI locale is auto-detected.
