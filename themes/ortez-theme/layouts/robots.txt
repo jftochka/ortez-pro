@@ -1,5 +1,4 @@
 User-agent: *
-Disallow: /admin/
 Disallow: /cms/
 
 Sitemap: {{ .Site.BaseURL }}sitemap.xml
