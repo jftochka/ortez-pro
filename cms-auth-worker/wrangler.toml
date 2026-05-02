@@ -2,6 +2,12 @@ name = "ortez-cms-auth"
 main = "src/index.js"
 compatibility_date = "2024-09-01"
 
+# Custom domain on the user's zone (ortez.com.ua is on Cloudflare).
+# Cloudflare auto-creates a CNAME and TLS cert for this hostname.
+routes = [
+  { pattern = "cms-auth.ortez.com.ua", custom_domain = true }
+]
+
 # Set the variables below via:
 #   npx wrangler secret put GOOGLE_CLIENT_ID
 #   npx wrangler secret put GOOGLE_CLIENT_SECRET

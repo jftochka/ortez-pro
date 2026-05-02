@@ -9,7 +9,7 @@ Cloudflare Worker, який дозволяє клієнту логінитися
 ```
 
 1. Клієнт відкриває `https://ortez.com.ua/cms/` і натискає "Login"
-2. Sveltia CMS відкриває попап з URL: `https://ortez-cms-auth.workers.dev/auth?provider=github&...`
+2. Sveltia CMS відкриває попап з URL: `https://cms-auth.ortez.com.ua/auth?provider=github&...`
 3. Worker перенаправляє на Google OAuth
 4. Клієнт логіниться в Google (з 2FA, якщо налаштовано)
 5. Google повертає на `/callback` Worker'а
@@ -106,7 +106,7 @@ npx wrangler deploy
 
 Після успіху Wrangler виведе URL Worker'а, наприклад:
 ```
-https://ortez-cms-auth.YOUR-USERNAME.workers.dev
+https://cms-auth.ortez.com.ua
 ```
 
 **Запам'ятайте цей URL** -- знадобиться у наступних кроках.
@@ -153,7 +153,7 @@ npx wrangler secret put ALLOWED_DOMAINS
 2. Відкрийте ваш OAuth Client
 3. **Authorized redirect URIs → Add URI**:
    ```
-   https://ortez-cms-auth.YOUR-USERNAME.workers.dev/callback
+   https://cms-auth.ortez.com.ua/callback
    ```
 4. **Save**
 
@@ -168,11 +168,10 @@ backend:
   name: github
   repo: jftochka/ortez-pro
   branch: main
-  base_url: https://ortez-cms-auth.YOUR-USERNAME.workers.dev
+  base_url: https://cms-auth.ortez.com.ua
   auth_endpoint: auth
 ```
 
-(Замініть `YOUR-USERNAME` на реальний Cloudflare subdomain вашого Worker'а.)
 
 Закомітьте і запушіть. GitHub Actions перебудує сайт.
 
