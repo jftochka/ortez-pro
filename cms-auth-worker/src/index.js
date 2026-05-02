@@ -73,20 +73,63 @@ async function handleGithubProxy(request, env) {
   }
 
   const url = new URL(request.url);
-  const ghPath = url.pathname.replace(/^\/github/, '') || '/';
+  // Sveltia treats non-github.com api_root as GHE-style:
+  //   REST:    <api_root>/api/v3/<path>     -> github.com REST is /<path>
+  //   GraphQL: <api_root>/api/graphql       -> github.com GraphQL is /graphql
+  // Map both to the canonical github.com paths.
+  let ghPath = url.pathname;
+  if (ghPath.startsWith('/github/api/v3/') || ghPath === '/github/api/v3') {
+    ghPath = ghPath.slice('/github/api/v3'.length) || '/';
+  } else if (ghPath === '/github/api/graphql' || ghPath === '/github/api/graphql/') {
+    ghPath = '/graphql';
+  } else if (ghPath.startsWith('/github/')) {
+    ghPath = ghPath.slice('/github'.length);
+  } else if (ghPath === '/github') {
+    ghPath = '/';
+  }
+  ghPath = ghPath || '/';
+
+  const BOT_LOGIN = 'ortez-pro-cms-bot';
 
   // Synthetic /user endpoint -- installation tokens can't reach this on GitHub
   if (ghPath === '/user' || ghPath === '/user/') {
     const body = JSON.stringify({
-      login: 'ortez-pro-cms-bot',
+      login: BOT_LOGIN,
       id: 0,
       node_id: 'BOT_kgDOAAAAAA',
       avatar_url: 'https://avatars.githubusercontent.com/u/0?v=4',
-      html_url: 'https://github.com/apps/ortez-pro-cms-bot',
+      html_url: `https://github.com/apps/${BOT_LOGIN}`,
       type: 'Bot',
       name: 'Ortez-Pro CMS',
       email: null,
       site_admin: false,
+    });
+    return new Response(body, {
+      status: 200,
+      headers: { 'Content-Type': 'application/json; charset=utf-8', ...cors },
+    });
+  }
+
+  // Synthetic collaborator check: Sveltia verifies the editor is a repo
+  // collaborator. Our synthetic bot user doesn't exist on github.com, so
+  // pretend any collaborator query for this bot login is true (204).
+  const collabMatch = ghPath.match(/^\/repos\/[^/]+\/[^/]+\/collaborators\/([^/]+)\/?$/);
+  if (collabMatch && collabMatch[1] === BOT_LOGIN) {
+    return new Response(null, { status: 204, headers: cors });
+  }
+
+  // Synthetic permission check: return 'admin' for our bot
+  const permMatch = ghPath.match(/^\/repos\/[^/]+\/[^/]+\/collaborators\/([^/]+)\/permission\/?$/);
+  if (permMatch && permMatch[1] === BOT_LOGIN) {
+    const body = JSON.stringify({
+      permission: 'admin',
+      role_name: 'admin',
+      user: {
+        login: BOT_LOGIN,
+        id: 0,
+        type: 'Bot',
+        site_admin: false,
+      },
     });
     return new Response(body, {
       status: 200,
