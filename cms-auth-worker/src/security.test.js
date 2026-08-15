@@ -16,6 +16,7 @@ import {
   emailsAllowlisted,
   rateLimitDecision,
   genericErrorMessage,
+  applyCommitIdentity,
 } from './security.js';
 
 describe('isAllowedHost', () => {
@@ -162,5 +163,25 @@ describe('genericErrorMessage', () => {
   it('does not echo upstream bodies', () => {
     assert.equal(genericErrorMessage('Google token exchange failed: secret'), 'Авторизацію не завершено.');
     assert.ok(!genericErrorMessage('x').includes('secret'));
+  });
+});
+
+describe('applyCommitIdentity', () => {
+  const name = 'jftochka';
+  const email = '36163658+jftochka@users.noreply.github.com';
+
+  it('sets author and committer on contents and git-commit payloads', () => {
+    const contents = applyCommitIdentity({ message: 'x', content: 'YQ==', sha: 'abc' }, name, email);
+    assert.deepEqual(contents.author, { name, email });
+    assert.deepEqual(contents.committer, { name, email });
+    const git = applyCommitIdentity({ message: 'x', tree: 'def', parents: ['abc'] }, name, email);
+    assert.deepEqual(git.author, { name, email });
+  });
+
+  it('leaves unrelated JSON and empty identity alone', () => {
+    const blob = { content: 'YQ==', encoding: 'base64' };
+    assert.equal(applyCommitIdentity(blob, name, email), blob);
+    const msg = { message: 'x', content: 'YQ==' };
+    assert.equal(applyCommitIdentity(msg, '', email), msg);
   });
 });

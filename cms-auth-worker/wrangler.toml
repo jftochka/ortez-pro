@@ -8,6 +8,8 @@ routes = [
 
 [vars]
 GITHUB_REPO = "jftochka/ortez-pro"
+COMMIT_AUTHOR_NAME = "jftochka"
+COMMIT_AUTHOR_EMAIL = "36163658+jftochka@users.noreply.github.com"
 
 [observability]
 enabled = true

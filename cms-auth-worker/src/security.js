@@ -216,6 +216,15 @@ export function genericErrorMessage() {
   return 'Авторизацію не завершено.';
 }
 
+export function applyCommitIdentity(payload, name, email) {
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload)) return payload;
+  if (!name || !email) return payload;
+  if (typeof payload.message !== 'string') return payload;
+  if (!('content' in payload) && !('tree' in payload)) return payload;
+  const id = { name: String(name), email: String(email) };
+  return { ...payload, author: id, committer: id };
+}
+
 export function mapWorkerGithubPath(pathname) {
   let ghPath = pathname;
   if (ghPath.startsWith('/github/api/v3/') || ghPath === '/github/api/v3') {

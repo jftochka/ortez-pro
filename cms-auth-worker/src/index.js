@@ -8,6 +8,7 @@
  */
 
 import {
+  applyCommitIdentity,
   emailsAllowlisted,
   genericErrorMessage,
   isAllowedHost,
@@ -26,8 +27,10 @@ const GOOGLE_AUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth';
 const GOOGLE_TOKEN_URL = 'https://oauth2.googleapis.com/token';
 const GOOGLE_JWKS_URL = 'https://www.googleapis.com/oauth2/v3/certs';
 const GITHUB_API = 'https://api.github.com';
-const BOT_LOGIN = 'ortez-pro-cms-bot';
+const EDITOR_LOGIN = 'cms-editor';
 const DEFAULT_REPO = 'jftochka/ortez-pro';
+const DEFAULT_COMMIT_NAME = 'jftochka';
+const DEFAULT_COMMIT_EMAIL = '36163658+jftochka@users.noreply.github.com';
 const AUTH_RATE_LIMIT = 20;
 const AUTH_RATE_WINDOW_SEC = 300;
 const PROXY_BODY_MAX = 2 * 1024 * 1024;
@@ -119,14 +122,14 @@ async function handleGithubProxy(request, env) {
 
   if (ghPath === '/user' || ghPath === '/user/') {
     const body = JSON.stringify({
-      login: BOT_LOGIN,
+      login: EDITOR_LOGIN,
       id: 0,
       node_id: 'BOT_kgDOAAAAAA',
       avatar_url: 'https://avatars.githubusercontent.com/u/0?v=4',
-      html_url: `https://github.com/apps/${BOT_LOGIN}`,
-      type: 'Bot',
-      name: 'Ortez-Pro CMS',
-      email: null,
+      html_url: 'https://github.com/jftochka',
+      type: 'User',
+      name: 'jftochka',
+      email: DEFAULT_COMMIT_EMAIL,
       site_admin: false,
     });
     return new Response(body, {
@@ -136,16 +139,16 @@ async function handleGithubProxy(request, env) {
   }
 
   const collabMatch = ghPath.match(/^\/repos\/[^/]+\/[^/]+\/collaborators\/([^/]+)\/?$/);
-  if (collabMatch && collabMatch[1] === BOT_LOGIN) {
+  if (collabMatch && collabMatch[1] === EDITOR_LOGIN) {
     return new Response(null, { status: 204, headers: cors });
   }
 
   const permMatch = ghPath.match(/^\/repos\/[^/]+\/[^/]+\/collaborators\/([^/]+)\/permission\/?$/);
-  if (permMatch && permMatch[1] === BOT_LOGIN) {
+  if (permMatch && permMatch[1] === EDITOR_LOGIN) {
     const body = JSON.stringify({
       permission: 'write',
       role_name: 'write',
-      user: { login: BOT_LOGIN, id: 0, type: 'Bot', site_admin: false },
+      user: { login: EDITOR_LOGIN, id: 0, type: 'User', site_admin: false },
     });
     return new Response(body, {
       status: 200,
@@ -189,7 +192,18 @@ async function handleGithubProxy(request, env) {
         headers: { 'Content-Type': 'application/json', ...cors },
       });
     }
-    init.body = buf;
+    const text = new TextDecoder().decode(buf);
+    try {
+      const parsed = JSON.parse(text);
+      const stamped = applyCommitIdentity(
+        parsed,
+        env.COMMIT_AUTHOR_NAME || DEFAULT_COMMIT_NAME,
+        env.COMMIT_AUTHOR_EMAIL || DEFAULT_COMMIT_EMAIL
+      );
+      init.body = JSON.stringify(stamped);
+    } catch {
+      init.body = buf;
+    }
   }
 
   const upstreamRes = await fetch(`https://api.github.com${ghPath}${url.search}`, init);
