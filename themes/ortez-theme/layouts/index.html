@@ -6,13 +6,16 @@
 {{- range $contact.phones -}}{{- if .primary -}}{{- $primaryPhone = .number -}}{{- end -}}{{- end -}}
 {{- if not $primaryPhone -}}{{- with index $contact.phones 0 -}}{{- $primaryPhone = .number -}}{{- end -}}{{- end -}}
 {{- $heroHeadline := or $hp.hero.headline $site.title -}}
-{{- $heroHref := cond (eq $hp.hero.cta_type "url") (partial "safe-href.html" $hp.hero.cta_url) (printf "tel:%s" (replaceRE " " "" $primaryPhone)) -}}
+{{- $heroHref := printf "tel:%s" (replaceRE " " "" $primaryPhone) -}}
+{{- if eq $hp.hero.cta_type "url" -}}
+{{- $heroHref = partial "safe-href.html" $hp.hero.cta_url -}}
+{{- end -}}
 
 <section class="hero-full"{{ with $hp.hero.background_image }} style="background-image: linear-gradient(rgba(37, 183, 151, 0.85), rgba(2, 116, 190, 0.85)), url('{{ . }}'); background-size: cover; background-position: center;"{{ end }}>
     <div class="container">
         <h1>{{ $heroHeadline }}</h1>
         <p class="subtitle">{{ $hp.hero.subtitle }}</p>
-        <a href="{{ $heroHref }}" class="btn btn-primary">{{ $hp.hero.cta_label }}</a>
+        <a href="{{ $heroHref | safeURL }}" class="btn btn-primary">{{ $hp.hero.cta_label }}</a>
     </div>
 </section>
 

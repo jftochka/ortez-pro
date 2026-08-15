@@ -21,7 +21,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://code.jquery.com https://cdn.jsdelivr.net https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com; frame-src https://www.google.com; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://api.web3forms.com; font-src 'self' https://cdn.jsdelivr.net; base-uri 'self'; form-action 'self' https://api.web3forms.com; frame-ancestors 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://code.jquery.com https://cdn.jsdelivr.net https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com; style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com; frame-src https://www.google.com; connect-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://api.web3forms.com https://static.cloudflareinsights.com; font-src 'self' https://cdn.jsdelivr.net; base-uri 'self'; form-action 'self' https://api.web3forms.com; frame-ancestors 'none'; object-src 'none'">
 {{- if $gaId }}
 <meta name="google-analytics-id" content="{{ $gaId }}">
 {{- end }}
@@ -76,21 +76,12 @@
 {{ $style := resources.Get "css/style.css" | fingerprint }}
 <link rel="stylesheet" href="{{ $style.RelPermalink }}" integrity="{{ $style.Data.Integrity }}">
 
-<!-- Non-critical CSS - load async with SRI -->
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" as="style"
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
   integrity="sha384-MUdXdzn1OB/0zkr4yGLnCqZ/n9ut5N7Ifes9RP2d5xKsTtcPiuiwthWczWuiqFOn"
-  crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'">
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" as="style"
+  crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"
   integrity="sha384-3wRRg17hVCopINZVYCqnfbgXE7aFPSvawmLWNPSiUPVx+HxY+yxb5Cwp5mT7RXPD"
-  crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'">
-<noscript>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
-      integrity="sha384-MUdXdzn1OB/0zkr4yGLnCqZ/n9ut5N7Ifes9RP2d5xKsTtcPiuiwthWczWuiqFOn"
-      crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"
-      integrity="sha384-3wRRg17hVCopINZVYCqnfbgXE7aFPSvawmLWNPSiUPVx+HxY+yxb5Cwp5mT7RXPD"
-      crossorigin="anonymous">
-</noscript>
+  crossorigin="anonymous">
 
 <!-- Structured Data (JSON-LD) -->
 {{ partial "schema.html" . }}

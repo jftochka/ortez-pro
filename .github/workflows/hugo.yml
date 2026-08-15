@@ -40,7 +40,13 @@ jobs:
           node --test cms-auth-worker/src/*.test.js
 
       - name: Build with Hugo
-        run: hugo --minify
+        run: |
+          hugo --minify
+          if grep -R --quiet ZgotmplZ public; then
+            echo "Hugo emitted ZgotmplZ"
+            grep -R ZgotmplZ public
+            exit 1
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
