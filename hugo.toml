@@ -1,0 +1,36 @@
+canonifyURLs = true
+baseURL = 'https://ortez.com.ua/'
+languageCode = 'uk-UA'
+title = 'Ортез-Про'
+theme = 'ortez-theme'
+
+defaultContentLanguage = 'uk'
+enableRobotsTXT = true
+
+# Disable empty taxonomy pages so they don't appear in sitemap
+disableKinds = ["taxonomy", "term"]
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      # Existing pages (pro-nas, yak-otrymaty) contain raw HTML.
+      unsafe = true
+
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+  page = ["HTML"]
+
+[sitemap]
+  filename = "sitemap.xml"
+
+# Security: restrict Hugo's OS access
+[security]
+  [security.exec]
+    allow = ['^go$', '^npx$', '^postcss$']
+    osEnv = ['(?i)^(PATH|PATHEXT|APPDATA|TMP|TEMP|TERM|HOME|USERPROFILE)$']
+  [security.funcs]
+    getenv = ['^HUGO_', '^CI$']
+  [security.http]
+    methods = ['(?i)GET|POST']
+    urls = ['.*']

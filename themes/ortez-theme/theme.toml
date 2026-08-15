@@ -1,0 +1,8 @@
+name = "Ortez Theme"
+license = "MIT"
+description = "Custom theme for Ortez-Pro orthopedic company"
+tags = ["medical", "business", "responsive"]
+min_version = "0.100.0"
+
+[author]
+  name = "Ortez-Pro"

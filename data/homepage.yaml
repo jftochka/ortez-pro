@@ -1,0 +1,48 @@
+# Головна сторінка -- редагується через CMS
+
+hero:
+  headline: ""
+  subtitle: "Виготовлення протезно-ортопедичної продукції за індивідуальним замовленням"
+  cta_label: "Запис на консультацію"
+  cta_type: "phone"
+  cta_url: ""
+  background_image: ""
+
+services:
+  section_title: "Послуги"
+  items:
+    - title: "Ортези верхні"
+      image: "/images/ortez_verhnij_bezsharnirnyj-1024x706.png"
+      url: "/ortezy/systemy-orteziv-na-verhni-kinczivky/"
+      alt: "Ортези верхні кінцівки"
+    - title: "Ортези шарнірні"
+      image: "/images/ortez_verhni_sharnirnyj-1024x706.png"
+      url: "/ortezy/systemy-orteziv-na-verhni-kinczivky/"
+      alt: "Ортези шарнірні"
+    - title: "Протези нижні"
+      image: "/images/protez_nyzhni-1024x706.png"
+      url: "/protezy/systemy-proteziv-na-nyzhni-kinczivky/"
+      alt: "Протези нижніх кінцівок"
+    - title: "Ортези нижні"
+      image: "/images/ortez_nyzhni_bezsharnirnyj-1024x706.png"
+      url: "/ortezy/systemy-orteziv-na-nyzhni-kinczivky/"
+      alt: "Ортези нижніх кінцівок"
+
+partners:
+  section_title: "Наші партнери"
+  items:
+    - name: "Ottobock"
+      image: "/images/1280px-Otto_Bock_logo.svg.png"
+      url: ""
+    - name: "Міністерство соціальної політики України"
+      image: "/images/minsocpol-300x300.png"
+      url: ""
+    - name: "Київський міський центр соціальних служб"
+      image: "/images/ntdmq_bmeia1345435-300x252.png"
+      url: ""
+    - name: "OKM Orthopedics"
+      image: "/images/okm5345345-300x300.png"
+      url: ""
+    - name: "Українське протезно-ортопедичне об'єднання"
+      image: "/images/logo34534-300x300.png"
+      url: ""

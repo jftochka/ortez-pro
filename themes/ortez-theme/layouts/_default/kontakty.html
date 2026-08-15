@@ -1,0 +1,108 @@
+{{ define "main" }}
+{{- $contact := .Site.Data.contact -}}
+
+<div class="page-header">
+    <div class="container">
+        <h1>{{ .Title }}</h1>
+        {{ with .Description }}<p>{{ . }}</p>{{ end }}
+    </div>
+</div>
+
+<section class="section">
+    <div class="container">
+
+        {{ with .Content }}
+        <div class="page-intro" style="margin-bottom: 40px;">
+            {{ . }}
+        </div>
+        {{ end }}
+
+        <div class="contact-page">
+            <div class="contact-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-bottom: 50px;">
+
+                <div class="contact-info">
+                    <h2 class="mb-4">Наші контакти</h2>
+
+                    {{ if $contact.phones }}
+                    <div class="info-item mb-4">
+                        <h3>Телефони</h3>
+                        <ul class="list-unstyled">
+                            {{ range $contact.phones }}
+                            <li>
+                                <a href="tel:{{ replaceRE " " "" .number }}" class="text-dark" style="font-size: 1.1rem; font-weight: 500;">
+                                    {{ .number }}{{ with .label }} <small style="color: #666; font-weight: normal;">({{ . }})</small>{{ end }}
+                                </a>
+                            </li>
+                            {{ end }}
+                        </ul>
+                    </div>
+                    {{ end }}
+
+                    {{ with $contact.email }}
+                    <div class="info-item mb-4">
+                        <h3>Email</h3>
+                        <p><a href="mailto:{{ . }}" class="text-dark">{{ . }}</a></p>
+                    </div>
+                    {{ end }}
+
+                    {{ with $contact.address.formatted }}
+                    <div class="info-item mb-4">
+                        <h3>Адреса</h3>
+                        <p>{{ . }}</p>
+                    </div>
+                    {{ end }}
+
+                    {{ if $contact.opening_hours }}
+                    <div class="info-item mb-4">
+                        <h3>Графік роботи</h3>
+                        <p>
+                            {{ range $i, $h := $contact.opening_hours }}
+                            {{ if $i }}<br>{{ end }}{{ $h.days }}: {{ $h.hours }}
+                            {{ end }}
+                        </p>
+                    </div>
+                    {{ end }}
+
+                    {{ if $contact.social_links }}
+                    <div class="social-buttons mt-4">
+                        <h3 class="mb-3">Ми в соціальних мережах</h3>
+                        <div class="d-flex flex-wrap" style="gap: 15px;">
+                            {{ range $contact.social_links }}
+                            <a href="{{ partial "safe-href.html" .url }}" target="_blank" rel="noopener noreferrer" class="btn social-btn" style="background: {{ .color | default "#666" }}; color: white; display: flex; align-items: center; gap: 10px;">{{ .label }}</a>
+                            {{ end }}
+                        </div>
+                    </div>
+                    {{ end }}
+                </div>
+
+                <div class="feedback-form-section p-4" style="background: #f9f9f9; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+                    <h3 class="mb-3">Залишити анонімний відгук</h3>
+                    <p class="text-muted mb-4">Ваша думка важлива для нас. Напишіть свої пропозиції чи зауваження.</p>
+                    <form action="https://api.web3forms.com/submit" method="POST" id="feedback-form">
+                        <input type="hidden" name="access_key" value="{{ $contact.forms.web3forms_key }}">
+                        <input type="hidden" name="subject" value="{{ $contact.forms.feedback_subject }}">
+                        <input type="hidden" name="from_name" value="Ortez-Pro Feedback">
+                        <input type="hidden" name="redirect" value="{{ partial "safe-href.html" $contact.forms.feedback_redirect }}">
+                        <input type="text" name="botcheck" style="display: none;">
+                        <div class="form-group mb-3">
+                            <textarea class="form-control" name="message" rows="5" placeholder="Ваш відгук..." required minlength="10" style="width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 5px;"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block" style="width: 100%;">Надіслати</button>
+                        <div id="form-status" style="margin-top: 10px; display: none;"></div>
+                    </form>
+                </div>
+            </div>
+
+            {{ with $contact.map.embed_src }}
+            {{ if and (hasPrefix . "https://www.google.com/maps/embed") (not (in . "..")) }}
+            <div class="map-section mt-5">
+                <div class="map-responsive" style="overflow:hidden; padding-bottom:40%; position:relative; height:0;">
+                    <iframe src="{{ . }}" width="600" height="450" style="border:0; left:0; top:0; height:100%; width:100%; position:absolute;" allowfullscreen="" loading="lazy" sandbox="allow-scripts allow-same-origin" referrerpolicy="no-referrer" title="Карта розташування Ортез-Про"></iframe>
+                </div>
+            </div>
+            {{ end }}
+            {{ end }}
+        </div>
+    </div>
+</section>
+{{ end }}

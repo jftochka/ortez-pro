@@ -1,0 +1,39 @@
+# Меню навігації -- редагується через CMS
+
+items:
+  - name: "Головна"
+    url: "/"
+    weight: 1
+    children: []
+  - name: "Про нас"
+    url: "/pro-nas/"
+    weight: 2
+    children: []
+  - name: "Ортези"
+    url: "/ortezy/"
+    weight: 3
+    children:
+      - name: "Ортези на хребет"
+        url: "/ortezy/systemy-orteziv-na-hrebet/"
+      - name: "Ортези на верхні кінцівки"
+        url: "/ortezy/systemy-orteziv-na-verhni-kinczivky/"
+      - name: "Ортези на нижні кінцівки"
+        url: "/ortezy/systemy-orteziv-na-nyzhni-kinczivky/"
+  - name: "Протези"
+    url: "/protezy/"
+    weight: 4
+    children:
+      - name: "Протези на нижні кінцівки"
+        url: "/protezy/systemy-proteziv-na-nyzhni-kinczivky/"
+  - name: "Ортопедичні устілки"
+    url: "/ortopedychni-ustilky/"
+    weight: 5
+    children: []
+  - name: "Як отримати?"
+    url: "/yak-otrymaty/"
+    weight: 6
+    children: []
+  - name: "Контакти"
+    url: "/kontakty/"
+    weight: 7
+    children: []

@@ -1,0 +1,28 @@
+# Загальні налаштування сайту -- редагується через CMS
+
+title: "Ортез-Про"
+short_name: "Ортез-Про"
+description: "Протезно-Ортопедичне Підприємство"
+tagline: "Виготовлення протезно-ортопедичної продукції за індивідуальним замовленням"
+author: "Ортез-Про"
+language: "uk-UA"
+locale: "uk_UA"
+
+# Брендинг
+logo: "/images/logo.png"
+default_og_image: "/images/logo.png"
+favicon: "/images/logo.png"
+
+# Кольори
+primary_color: "#25b797"
+secondary_color: "#0274be"
+
+# Аналітика
+google_analytics_id: "G-89B6QW9E7W"
+
+# CTA в шапці
+header_cta_label: "Зв'язатися"
+header_cta_url: "/kontakty/"
+
+# Футер
+footer_copyright_template: "© %YEAR% Ортез-Про. Всі права захищено."

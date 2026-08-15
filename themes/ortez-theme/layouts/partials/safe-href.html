@@ -1,0 +1,6 @@
+{{- $u := strings.TrimSpace (printf "%s" .) -}}
+{{- if and $u (or (and (hasPrefix $u "/") (not (hasPrefix $u "//"))) (hasPrefix $u "https://") (hasPrefix $u "tel:") (hasPrefix $u "mailto:")) (not (findRE "[<>\"']" $u)) -}}
+{{- $u -}}
+{{- else -}}
+#
+{{- end -}}

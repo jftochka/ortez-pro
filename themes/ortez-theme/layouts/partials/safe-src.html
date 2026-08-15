@@ -1,0 +1,4 @@
+{{- $u := strings.TrimSpace (printf "%s" .) -}}
+{{- if and $u (hasPrefix $u "/images/") (not (findRE "['\"()<>]" $u)) (not (in $u "..")) -}}
+{{- $u -}}
+{{- end -}}

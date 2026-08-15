@@ -1,0 +1,42 @@
+# Build and temporary folders
+public/
+resources/
+.hugo_build.lock
+
+# Operating System files (macOS, Windows, Linux)
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Security: Never commit environment variables or secrets
+.env
+.env.*
+*.pem
+*.key
+*.pub
+credentials.json
+secrets.txt
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Log files
+*.log
+claudehistoryfile.txt
+GROKLORE.TXT
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store

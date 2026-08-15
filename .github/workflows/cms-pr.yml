@@ -1,0 +1,25 @@
+name: Open CMS PR
+
+on:
+  push:
+    branches: ["cms"]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Ensure PR to main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          count=$(gh pr list --base main --head cms --state open --json number --jq 'length')
+          if [ "$count" = "0" ]; then
+            gh pr create --base main --head cms --title "CMS content" --body "Content updates from CMS branch."
+          fi

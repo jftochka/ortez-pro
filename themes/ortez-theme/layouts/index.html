@@ -1,0 +1,51 @@
+{{ define "main" }}
+{{- $site := .Site.Data.site -}}
+{{- $contact := .Site.Data.contact -}}
+{{- $hp := .Site.Data.homepage -}}
+{{- $primaryPhone := "" -}}
+{{- range $contact.phones -}}{{- if .primary -}}{{- $primaryPhone = .number -}}{{- end -}}{{- end -}}
+{{- if not $primaryPhone -}}{{- with index $contact.phones 0 -}}{{- $primaryPhone = .number -}}{{- end -}}{{- end -}}
+{{- $heroHeadline := or $hp.hero.headline $site.title -}}
+{{- $heroHref := cond (eq $hp.hero.cta_type "url") (partial "safe-href.html" $hp.hero.cta_url) (printf "tel:%s" (replaceRE " " "" $primaryPhone)) -}}
+
+<section class="hero-full"{{ with $hp.hero.background_image }} style="background-image: linear-gradient(rgba(37, 183, 151, 0.85), rgba(2, 116, 190, 0.85)), url('{{ . }}'); background-size: cover; background-position: center;"{{ end }}>
+    <div class="container">
+        <h1>{{ $heroHeadline }}</h1>
+        <p class="subtitle">{{ $hp.hero.subtitle }}</p>
+        <a href="{{ $heroHref }}" class="btn btn-primary">{{ $hp.hero.cta_label }}</a>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <h2 class="text-center mb-5">{{ $hp.services.section_title }}</h2>
+        <div class="services-carousel">
+            {{ range $hp.services.items }}
+            {{ $stitle := .title }}
+            <div class="carousel-item">
+                <a href="{{ partial "safe-href.html" .url }}">
+                    {{ with partial "safe-src.html" .image }}<img src="{{ . }}" alt="{{ $stitle }}" loading="lazy">{{ end }}
+                    <h4 class="mt-2">{{ $stitle }}</h4>
+                </a>
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</section>
+
+<section class="section" style="background:#f8f9fa;">
+    <div class="container">
+        <h2 class="text-center mb-5">{{ $hp.partners.section_title }}</h2>
+        <div class="partners-grid" style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 40px; padding: 40px 0;">
+            {{ range $hp.partners.items }}
+            <div class="partner-item" style="flex: 0 1 180px; display: flex; justify-content: center; align-items: center;">
+                {{ if .url }}<a href="{{ partial "safe-href.html" .url }}" target="_blank" rel="noopener noreferrer">{{ end }}
+                {{ $pname := .name }}
+                {{ with partial "safe-src.html" .image }}<img src="{{ . }}" alt="{{ $pname }}" style="max-height: 80px; max-width: 100%; object-fit: contain;" loading="lazy">{{ end }}
+                {{ if .url }}</a>{{ end }}
+            </div>
+            {{ end }}
+        </div>
+    </div>
+</section>
+{{ end }}

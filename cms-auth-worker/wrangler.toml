@@ -1,0 +1,26 @@
+name = "ortez-cms-auth"
+main = "src/index.js"
+compatibility_date = "2026-08-15"
+
+routes = [
+  { pattern = "cms-auth.ortez.com.ua", custom_domain = true }
+]
+
+[vars]
+GITHUB_REPO = "jftochka/ortez-pro"
+
+[observability]
+enabled = true
+
+  [observability.logs]
+  head_sampling_rate = 1
+
+# Secrets (wrangler secret put), never in this file:
+#   GOOGLE_CLIENT_ID
+#   GOOGLE_CLIENT_SECRET
+#   GITHUB_APP_ID
+#   GITHUB_APP_PRIVATE_KEY
+#   GITHUB_APP_INSTALLATION_ID
+#   ALLOWED_EMAILS
+#   ALLOWED_DOMAINS   # production: ortez.com.ua only -- no localhost
+#   STATE_SECRET      # HMAC key, 32+ random bytes

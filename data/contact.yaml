@@ -1,0 +1,63 @@
+phones:
+  - number: +380 633927652
+    label: Мобільний
+    primary: true
+  - number: +380 97 988 98 81
+    label: Стаціонарний
+    primary: false
+email: ortez@ukr.net
+address:
+  street: вул. Казимира Малевича 86-Б
+  locality: Київ
+  region: Київ
+  region_code: UA-32
+  postal_code: '03150'
+  country: Україна
+  country_code: UA
+  formatted: 03150, м.Київ, вул. Казимира Малевича 86-Б
+geo:
+  latitude: 50.42616797947198
+  longitude: 30.51906731573038
+opening_hours:
+  - days: Пн-Пт
+    hours: 09:00 - 18:00
+    schema_days:
+      - Mo
+      - Tu
+      - We
+      - Th
+      - Fr
+    schema_opens: 09:00
+    schema_closes: 18:00
+    closed: false
+  - days: Сб-Нд
+    hours: Вихідний
+    schema_days:
+      - Sa
+      - Su
+    schema_opens: ''
+    schema_closes: ''
+    closed: true
+social_links:
+  - platform: viber
+    label: Viber
+    url: https://invite.viber.com/?g2=AQAbjAA856%2BJJ0kdnlhcYL1OyPSEBmg0U4QYDGwEH8z7ot%2F7Z3MMM3IQs2AEpHep
+    color: '#7360f2'
+  - platform: facebook
+    label: Facebook
+    url: https://www.facebook.com/groups/447762395760328
+    color: '#3b5998'
+  - platform: instagram
+    label: Instagram
+    url: https://www.instagram.com/ortezpro/
+    color: '#e1306c'
+  - platform: telegram
+    label: Telegram
+    url: https://t.me/ortez_pro
+    color: '#0088cc'
+map:
+  embed_src: https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2541.801642995536!2d30.51906731573038!3d50.42616797947198!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4cf3af9e31d45%3A0x7d6c6e7534438318!2z0LLRg9C7LiDQmtCw0LfQuNC80LjRgNCwINCc0LDQu9C10LLQuNGH0LAsIDg20JIsIDAzMTUwLCDQmtC40ZfQsg!5e0!3m2!1suk!2sua!4v1614264663999!5m2!1suk!2sua
+forms:
+  web3forms_key: YOUR_WEB3FORMS_KEY
+  feedback_subject: Новий відгук з ortez.com.ua
+  feedback_redirect: https://ortez.com.ua/kontakty/

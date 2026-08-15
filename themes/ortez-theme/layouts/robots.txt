@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /cms/
+
+Sitemap: {{ .Site.BaseURL }}sitemap.xml
