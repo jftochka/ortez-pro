@@ -7,7 +7,9 @@ describe('auth HTML pages', () => {
     const html = renderSuccessHtml('tok_test', 'owner@gmail.com', 'https://ortez.com.ua');
     assert.equal(/postMessage\([^)]*,\s*['"]\*['"]/.test(html), false);
     assert.equal(html.includes('tok_test'), true);
-    assert.equal(html.includes('https://ortez.com.ua'), true);
+    const postMessageOriginMatch = html.match(/postMessage\([^)]*,\s*['"]([^'"]+)['"]\s*\)/);
+    assert.notEqual(postMessageOriginMatch, null);
+    assert.equal(postMessageOriginMatch[1], 'https://ortez.com.ua');
   });
 
   it('refuses to render a token page without an https origin', () => {
